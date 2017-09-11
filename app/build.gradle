@@ -1,0 +1,36 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+
+    defaultConfig {
+        applicationId "com.moosebeat.pog.beat"
+        minSdkVersion 22
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    repositories {
+        // TODO: Remove once BSON 3.5.0 is released
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:18.0.0'
+    // compile 'org.mongodb:mongo-java-driver:3.5.0'
+    compile files('libs/acrcloud-android-sdk-1.5.6.1.jar')
+//    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+//    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
+    compile 'org.mongodb:stitch:0.1.0-SNAPSHOT'
+}
