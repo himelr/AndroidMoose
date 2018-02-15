@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.moosebeat.pog.beat"
-        minSdkVersion 22
-        targetSdkVersion 22
+        minSdkVersion 26
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
     }
@@ -27,10 +28,14 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:18.0.0'
+    compile 'com.android.support:support-v4:26.0.0'
     // compile 'org.mongodb:mongo-java-driver:3.5.0'
     compile files('libs/acrcloud-android-sdk-1.5.6.1.jar')
 //    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
 //    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
     compile 'org.mongodb:stitch:0.1.0-SNAPSHOT'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

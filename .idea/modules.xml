@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ACRCloudSDKDemo.iml" filepath="$PROJECT_DIR$/ACRCloudSDKDemo.iml" />
+      <module fileurl="file://C:\Users\HimelR\Documents\NetBeansProjects\AndroidMoose\ACRCloudSDKDemo.iml" filepath="C:\Users\HimelR\Documents\NetBeansProjects\AndroidMoose\ACRCloudSDKDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AndroidMoose.iml" filepath="$PROJECT_DIR$/AndroidMoose.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\HimelR\Documents\NetBeansProjects\AndroidMoose\app\app.iml" filepath="C:\Users\HimelR\Documents\NetBeansProjects\AndroidMoose\app\app.iml" />
     </modules>
   </component>
 </project>

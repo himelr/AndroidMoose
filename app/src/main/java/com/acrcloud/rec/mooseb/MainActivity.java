@@ -10,9 +10,13 @@ import com.acrcloud.rec.sdk.ACRCloudConfig;
 import com.acrcloud.rec.sdk.ACRCloudClient;
 import com.acrcloud.rec.sdk.IACRCloudListener;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -35,6 +39,7 @@ public class MainActivity extends Activity implements IACRCloudListener {
 
 	private long startTime = 0;
 	private long stopTime = 0;
+	private final int MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 23;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -116,20 +121,38 @@ public class MainActivity extends Activity implements IACRCloudListener {
 
 	
 	public void start() {
-        if (!this.initState) {
-            Toast.makeText(this, "init error", Toast.LENGTH_SHORT).show();
-            return;
-        }
-		
-		if (!mProcessing) {
-			mProcessing = true;
-			mVolume.setText("");
-			mResult.setText("");
-			if (this.mClient == null || !this.mClient.startRecognize()) {
-				mProcessing = false;
-				mResult.setText("start error!");
+		System.out.println("aaa22");
+		if (ContextCompat.checkSelfPermission(this,
+				Manifest.permission.RECORD_AUDIO)
+				!= PackageManager.PERMISSION_GRANTED) {
+			System.out.println("aaa");
+
+
+			// Should we show an explanation?
+			if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+					Manifest.permission.RECORD_AUDIO)) {
+
+
+				// Show an explanation to the user *asynchronously* -- don't block
+				// this thread waiting for the user's response! After the user
+				// sees the explanation, try again to request the permission.
+
+			} else {
+
+				// No explanation needed, we can request the permission.
+
+				ActivityCompat.requestPermissions(this,
+						new String[]{Manifest.permission.RECORD_AUDIO},
+						MY_PERMISSIONS_REQUEST_RECORD_AUDIO);
+
+				// MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+				// app-defined int constant. The callback method gets the
+				// result of the request.
 			}
-            startTime = System.currentTimeMillis();
+		}
+		else {
+			recognizeMusic();
+
 		}
 	}
 
@@ -232,6 +255,33 @@ public class MainActivity extends Activity implements IACRCloudListener {
 		mVolume.setText(getResources().getString(R.string.volume) + volume + "\n\nTime：" + time + " s");
 	}
 
+	@Override
+	public void onRequestPermissionsResult(int requestCode,
+										   String permissions[], int[] grantResults) {
+		switch (requestCode) {
+			case MY_PERMISSIONS_REQUEST_RECORD_AUDIO: {
+				// If request is cancelled, the result arrays are empty.
+				if (grantResults.length > 0
+						&& grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+					recognizeMusic();
+
+
+					// permission was granted, yay! Do the
+					// contacts-related task you need to do.
+
+				} else {
+
+					// permission denied, boo! Disable the
+					// functionality that depends on this permission.
+				}
+				return;
+			}
+
+			// other 'case' lines to check for other
+			// permissions this app might request.
+		}
+	}
+
 	@Override  
     protected void onDestroy() {  
         super.onDestroy();  
@@ -241,5 +291,24 @@ public class MainActivity extends Activity implements IACRCloudListener {
         	this.initState = false;
         	this.mClient = null;
         }
-    } 
+    }
+    private void recognizeMusic(){
+
+		if (!this.initState) {
+			Toast.makeText(this, "init error", Toast.LENGTH_SHORT).show();
+			return;
+		}
+
+		if (!mProcessing) {
+			mProcessing = true;
+			mVolume.setText("");
+			mResult.setText("");
+			if (this.mClient == null || !this.mClient.startRecognize()) {
+				mProcessing = false;
+				mResult.setText("start error!");
+			}
+			startTime = System.currentTimeMillis();
+		}
+
+	}
 }
