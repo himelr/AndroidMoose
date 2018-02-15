@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
@@ -28,14 +29,26 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:26.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:support-v4:26.1.0'
+    compile 'com.android.support:animated-vector-drawable:26.1.0'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:mediarouter-v7:26.1.0'
+    //compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:26.1.0'
+
     // compile 'org.mongodb:mongo-java-driver:3.5.0'
     compile files('libs/acrcloud-android-sdk-1.5.6.1.jar')
 //    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
 //    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
-    compile 'org.mongodb:stitch:0.1.0-SNAPSHOT'
+    //compile 'org.mongodb:stitch:0.1.0-SNAPSHOT'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    compile 'com.google.firebase:firebase-core:11.8.0'
+    compile 'com.google.android.gms:play-services-base:11.8.0'
+    compile "com.google.firebase:firebase-auth:11.8.0"
+
 }
 repositories {
     mavenCentral()
 }
+apply plugin: 'com.google.gms.google-services'

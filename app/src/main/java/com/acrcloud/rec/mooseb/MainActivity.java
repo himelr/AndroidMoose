@@ -9,22 +9,33 @@ import org.json.JSONObject;
 import com.acrcloud.rec.sdk.ACRCloudConfig;
 import com.acrcloud.rec.sdk.ACRCloudClient;
 import com.acrcloud.rec.sdk.IACRCloudListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements IACRCloudListener {
+public class MainActivity extends AppCompatActivity implements IACRCloudListener {
     //NOTE: You can also implement IACRCloudResultWithAudioListener, replace "onResult(String result)" with "onResult(ACRCloudResult result)"
 
 	private ACRCloudClient mClient;
@@ -40,6 +51,7 @@ public class MainActivity extends Activity implements IACRCloudListener {
 	private long startTime = 0;
 	private long stopTime = 0;
 	private final int MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 23;
+	private FirebaseAuth auth =  FirebaseAuth.getInstance();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +129,29 @@ public class MainActivity extends Activity implements IACRCloudListener {
         if (this.initState) {
             this.mClient.startPreRecord(3000); //start prerecord, you can call "this.mClient.stopPreRecord()" to stop prerecord.
         }
+		Toolbar myToolbar =  findViewById(R.id.my_toolbar);
+		setSupportActionBar(myToolbar);
+		ActionBar ab = getSupportActionBar();
+
+		// Enable the Up button
+		ab.setDisplayHomeAsUpEnabled(true);
+
+		final FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
+			@Override
+			public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+				FirebaseUser user = firebaseAuth.getCurrentUser();
+				if (user == null) {
+					System.out.println("Logout");
+					// user auth state is changed - user is null
+					// launch login activity
+					startActivity(new Intent(MainActivity.this, LoginActivity.class));
+					finish();
+				}
+			}
+		};
+		auth.addAuthStateListener(authListener);
+
+
 	}
 
 	
@@ -177,7 +212,7 @@ public class MainActivity extends Activity implements IACRCloudListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.actionbar, menu);
 		return true;
 	}
 
@@ -311,4 +346,44 @@ public class MainActivity extends Activity implements IACRCloudListener {
 		}
 
 	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_settings:
+				// User chose the "Settings" item, show the app settings UI...
+				return true;
+
+			case R.id.action_favorite:
+				AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+				alertDialog.setTitle("Logout");
+				alertDialog.setMessage("Are you sure you want to logout?");
+				alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "NO",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								dialog.dismiss();
+							}
+						});
+				alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "YES",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+
+								if (auth.getCurrentUser() != null) {
+									auth.signOut();
+								}
+
+								//dialog.dismiss();
+							}
+						});
+				alertDialog.show();
+				return true;
+
+			default:
+				// If we got here, the user's action was not recognized.
+				// Invoke the superclass to handle it.
+				return super.onOptionsItemSelected(item);
+
+		}
+	}
+
 }
