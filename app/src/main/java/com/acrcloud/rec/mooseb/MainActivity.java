@@ -35,6 +35,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import moosedroid.Firebase.SignupFireActivity;
+
 public class MainActivity extends AppCompatActivity implements IACRCloudListener {
     //NOTE: You can also implement IACRCloudResultWithAudioListener, replace "onResult(String result)" with "onResult(ACRCloudResult result)"
 
@@ -108,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements IACRCloudListener
 
         this.mConfig = new ACRCloudConfig();
         this.mConfig.acrcloudListener = this;
+        
 
         // If you implement IACRCloudResultWithAudioListener and override "onResult(ACRCloudResult result)", you can get the Audio data.
         //this.mConfig.acrcloudResultWithAudioListener = this;
