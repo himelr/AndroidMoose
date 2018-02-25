@@ -21,5 +21,7 @@ class AppModule(private val context: Context) {
 
     @Provides
     fun providesToDoDao(database: AppDatabase) = database.userDao()
+    @Provides
+    fun providesSongDao(database: AppDatabase) = database.songDao()
 
 }

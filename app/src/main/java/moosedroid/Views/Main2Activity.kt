@@ -1,4 +1,4 @@
-package moosedroid
+package moosedroid.Views
 
 import java.io.File
 
@@ -11,8 +11,10 @@ import com.acrcloud.rec.sdk.IACRCloudListener
 import com.google.firebase.auth.FirebaseAuth
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.os.Environment
 import android.os.SystemClock
@@ -31,13 +33,23 @@ import android.widget.TextView
 import android.widget.Toast
 import com.acrcloud.rec.mooseb.R
 import com.acrcloud.rec.mooseb.R.layout.*
-import io.reactivex.Flowable
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import dagger.android.AndroidInjection
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import moosedroid.Firebase.LoginFireActivity
+import moosedroid.LocationData.LocationData
+import moosedroid.Presentation.AppModule
+import moosedroid.Presentation.SongPresenter
+import moosedroid.Room.AppDatabase
+import moosedroid.Room.Song
+import moosedroid.Room.SongDao
+import javax.inject.Inject
+
 
 
 class Main2Activity : AppCompatActivity(), IACRCloudListener {
@@ -57,12 +69,23 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
     private var startTime: Long = 0
     private var stopTime: Long = 0
     private val MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 23
+    private val MY_PERMISSIONS_REQUEST_LOCATION_DATA = 24
+
     private val auth = FirebaseAuth.getInstance()
+    private var compositeDisposable = CompositeDisposable()
+    private var mFusedLocationClient: FusedLocationProviderClient? = null
+
+    @Inject
+    lateinit var presenter:SongPresenter
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(activity_main)
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
          Log.d(TEST, "launch")
         path = Environment.getExternalStorageDirectory().toString() + "/acrcloud/model"
 
@@ -141,7 +164,7 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
             it.onComplete()
         }
         serverDownloadObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe { integer ->
-           testBox.text = integer.toString() // this methods updates the ui
+            //testBox.text = integer.toString() // this methods updates the ui
            // enables it again
         }
 
@@ -152,13 +175,13 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
     fun start() {
         println("aaaeweweww")
         if (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                        Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             println("aaa")
 
 
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                            Manifest.permission.RECORD_AUDIO)) {
+                            Manifest.permission.RECORD_AUDIO) || ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_COARSE_LOCATION) ) {
 
 
                 // Show an explanation to the user *asynchronously* -- don't block
@@ -170,7 +193,7 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
                 // No explanation needed, we can request the permission.
 
                 ActivityCompat.requestPermissions(this,
-                        arrayOf(Manifest.permission.RECORD_AUDIO),
+                        arrayOf(Manifest.permission.RECORD_AUDIO,Manifest.permission.ACCESS_COARSE_LOCATION),
                         MY_PERMISSIONS_REQUEST_RECORD_AUDIO)
 
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
@@ -208,6 +231,9 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
     }
 
     // Old api
+
+
+
     override fun onResult(result: String) {
         if (this.mClient != null) {
             this.mClient.cancel()
@@ -220,6 +246,7 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
             val j = JSONObject(result)
             val j1 = j.getJSONObject("status")
             val j2 = j1.getInt("code")
+
             if (j2 == 0) {
                 val metadata = j.getJSONObject("metadata")
                 //
@@ -265,15 +292,51 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
                 tres = tres + "\n\n" + result
             } else {
                 tres = result
+
             }
         } catch (e: JSONException) {
             tres = result
+
             e.printStackTrace()
         }
+        saveData(tres)
 
-        mResult!!.text = tres
+
     }
+    private fun saveData(tres:String){
 
+        val serverDownloadObservable:Observable<Location?> = Observable.create {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                mFusedLocationClient!!.lastLocation
+                        .addOnSuccessListener(this, { location ->
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                // Logic to handle location object
+                                Log.d("test2",location.longitude.toString())
+                                it.onNext(location)
+                                it.onComplete()
+
+                            }
+                        })
+            } else {
+            }
+
+
+        }
+        serverDownloadObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe { location ->
+
+            //Save song to use
+
+            presenter.addNewSong(Song("OWO","dsd","bob",2))
+            testBox.text = location?.longitude.toString()
+            mResult?.text = tres
+        }
+
+
+
+
+    }
     override fun onVolumeChanged(volume: Double) {
         val time = (System.currentTimeMillis() - startTime) / 1000
         mVolume!!.text = resources.getString(R.string.volume) + volume + "\n\nTime：" + time + " s"
@@ -285,7 +348,7 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
         when (requestCode) {
             MY_PERMISSIONS_REQUEST_RECORD_AUDIO -> {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED ) {
                     recognizeMusic()
 
 

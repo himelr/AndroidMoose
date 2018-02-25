@@ -14,6 +14,9 @@ import io.reactivex.Flowable
     @Query("select * from User where id = :id")
     fun findUserById(id: Long): User
 
+    @Query("select * from User where email = :id")
+    fun findUserByEmail(id: String): User
+
     @Insert(onConflict = REPLACE)
     fun insertUser(User: User)
 

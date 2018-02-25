@@ -22,8 +22,8 @@ class UserPresenter @Inject constructor(val userDao: UserDao) {
         loadusers()
     }
     //Avoid memory leaks
-    @Override
-    fun onDestroy() {
+
+  fun onDestroy() {
         compositeDisposable.dispose()
         presentation = null
     }

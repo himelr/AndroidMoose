@@ -12,14 +12,16 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import com.acrcloud.rec.mooseb.R
 
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.acrcloud.rec.mooseb.R.layout.*
-import moosedroid.Main2Activity
+import moosedroid.Presentation.UserPresenter
+import moosedroid.Views.Main2Activity
+import javax.inject.Inject
 
 class SignupFireActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var presenter: UserPresenter
     private var inputEmail: EditText? = null
     private var inputPassword:EditText? = null
     private var btnSignIn: Button? = null
@@ -79,6 +81,7 @@ class SignupFireActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT).show()
                         } else {
                             startActivity(Intent(this@SignupFireActivity, Main2Activity::class.java))
+                            presenter.addNewUser(email)
                             finish()
                         }
                     }

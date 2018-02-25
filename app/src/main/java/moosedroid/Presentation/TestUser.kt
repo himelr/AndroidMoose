@@ -1,24 +1,20 @@
 package moosedroid.Presentation
 
-import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.util.Log
-import android.widget.LinearLayout
-import android.widget.ListView
 import com.acrcloud.rec.mooseb.R
 import com.acrcloud.rec.mooseb.R.layout.activity_test_user
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_test_user.*
-import kotlinx.android.synthetic.main.toolbar_main.*
+import moosedroid.Room.Song
 import moosedroid.Room.User
 import moosedroid.Room.UserAdapter
 import javax.inject.Inject
 
-class TestUser : AppCompatActivity(),UserPresentation {
+class TestUser : AppCompatActivity(), UserPresentation {
 
 
     @Inject
@@ -40,6 +36,10 @@ class TestUser : AppCompatActivity(),UserPresentation {
         userList.adapter= UserAdapter(users)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -50,9 +50,9 @@ class TestUser : AppCompatActivity(),UserPresentation {
         recyclerView?.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         recyclerView?.adapter = UserAdapter(emptyList())
 
-        val song = Song("name","Genre")
 
-        Log.d("test2", song.date.toString())
+
+
         //setSupportActionBar(my_toolbar)
         //val ab = supportActionBar
         //ab!!.setDisplayHomeAsUpEnabled(true)

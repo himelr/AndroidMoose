@@ -9,7 +9,7 @@ import moosedroid.UserApplication
  * Created by HimelR on 17-Feb-18.
  */
 @Component(modules = arrayOf(AppModule::class,
-        UserModule::class))
+        UserModule::class,SongModule::class))
 
 interface AppComponent {
 

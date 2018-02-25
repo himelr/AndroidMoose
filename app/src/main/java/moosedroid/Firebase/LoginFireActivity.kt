@@ -16,8 +16,7 @@ import com.acrcloud.rec.mooseb.SignupActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import moosedroid.Main2Activity
-import moosedroid.Presentation.TestUser
+import moosedroid.Views.Main2Activity
 
 
 class LoginFireActivity : AppCompatActivity() {
@@ -36,9 +35,10 @@ class LoginFireActivity : AppCompatActivity() {
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
 
+
         if (auth!!.currentUser != null) {
             println("ss")
-            startActivity(Intent(this, TestUser::class.java))
+            startActivity(Intent(this, Main2Activity::class.java))
             finish()
         }
 
