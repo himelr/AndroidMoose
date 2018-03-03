@@ -17,6 +17,7 @@ import android.location.Location
 import android.os.Bundle
 import android.os.Environment
 import android.os.SystemClock
+import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 
@@ -133,12 +134,25 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
         if (this.initState) {
             this.mClient.startPreRecord(3000) //start prerecord, you can call "this.mClient.stopPreRecord()" to stop prerecord.
         }
-        val myToolbar = findViewById<Toolbar>(R.id.my_toolbar)
+        val myToolbar = findViewById<Toolbar>(R.id.my_toolbar2)
         setSupportActionBar(myToolbar)
         val ab = supportActionBar
 
+        val bottomNavigationView:BottomNavigationView = findViewById(R.id.navigation)
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+
+            when (item.itemId) {
+                R.id.action_item1 -> Log.d("test2", "1")
+                R.id.action_item2 -> Log.d("test2", "2")
+                R.id.action_item3 -> Log.d("test2", "3")
+            }
+
+            true
+        }
+
         // Enable the Up button
-        ab!!.setDisplayHomeAsUpEnabled(true)
+        //ab!!.setDisplayHomeAsUpEnabled(true)
 
         val authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser

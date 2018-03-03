@@ -23,7 +23,7 @@ class UserListenedActivity : AppCompatActivity(), ListenedPresentation {
 
     override fun showListened(listenedList: List<Listened>) {
             Log.d("test2", "set adapter")
-        Log.d("test2", listenedList[0].name)
+        //Log.d("test2", listenedList[0].name)
            listenedListRC.adapter = ListenedAdapter(listenedList)
 
 

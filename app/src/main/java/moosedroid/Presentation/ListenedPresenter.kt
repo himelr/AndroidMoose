@@ -31,11 +31,11 @@ class ListenedPresenter @Inject constructor(val listenedDao: ListenedDao) {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe ({
-                    Log.d("test2", it[0].name)
+                   // Log.d("test2", it[0].name)
                     listenedList.clear()
                     listenedList.addAll(it)
                     for(i in listenedList){
-                        Log.d("test2", i.genre)
+                       // Log.d("test2", i.genre)
                     }
                     (listenedList.size - 1).takeIf { it >= 0 } ?.let {
 
@@ -45,7 +45,7 @@ class ListenedPresenter @Inject constructor(val listenedDao: ListenedDao) {
                     }
                     presentation?.showListened(listenedList)
                 }))
-        Log.d("test2", "rd")
+       // Log.d("test2", "rd")
 
 
     }

@@ -32,25 +32,31 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".LoginActivity" />
-        <activity android:name="moosedroid.Views.Main2Activity" />
+        <activity android:name="moosedroid.Views.Main2Activity">
+      </activity>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
+
+
         <activity android:name=".SignupActivity" />
         <activity android:name=".SignUp" />
         <activity android:name=".ResetPasswordActivity" />
-        <activity android:name="moosedroid.Firebase.LoginFireActivity"></activity>
+        <activity android:name="moosedroid.Firebase.LoginFireActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name="moosedroid.Firebase.SignupFireActivity" />
         <activity android:name="moosedroid.Firebase.ResetPasswordFireActivity" />
         <activity android:name="moosedroid.Presentation.TestUser">
 
         </activity>
         <activity android:name="moosedroid.Views.UserListenedActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

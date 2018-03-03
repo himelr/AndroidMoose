@@ -58,9 +58,9 @@ class LoginFireActivity : AppCompatActivity() {
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance()
 
-        btnSignup!!.setOnClickListener { startActivity(Intent(this, SignupActivity::class.java)) }
+        btnSignup!!.setOnClickListener { startActivity(Intent(this, SignupFireActivity::class.java)) }
 
-        btnReset!!.setOnClickListener(View.OnClickListener { startActivity(Intent(this, ResetPasswordActivity::class.java)) })
+        btnReset!!.setOnClickListener(View.OnClickListener { startActivity(Intent(this, ResetPasswordFireActivity::class.java)) })
 
         btnLogin!!.setOnClickListener(View.OnClickListener {
             val email = inputEmail!!.text.toString()

@@ -14,6 +14,7 @@ import com.acrcloud.rec.mooseb.R
 
 import com.google.firebase.auth.FirebaseAuth
 import com.acrcloud.rec.mooseb.R.layout.*
+import dagger.android.AndroidInjection
 import moosedroid.Presentation.UserPresenter
 import moosedroid.Views.Main2Activity
 import javax.inject.Inject
@@ -22,6 +23,7 @@ class SignupFireActivity : AppCompatActivity() {
 
     @Inject
     lateinit var presenter: UserPresenter
+
     private var inputEmail: EditText? = null
     private var inputPassword:EditText? = null
     private var btnSignIn: Button? = null
@@ -31,6 +33,7 @@ class SignupFireActivity : AppCompatActivity() {
     private var auth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(activity_signup)
 
@@ -72,16 +75,19 @@ class SignupFireActivity : AppCompatActivity() {
             auth!!.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this@SignupFireActivity) { task ->
                         Toast.makeText(this@SignupFireActivity, "createUserWithEmail:onComplete:" + task.isSuccessful, Toast.LENGTH_SHORT).show()
+
                         progressBar!!.visibility = View.GONE
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
+
                         if (!task.isSuccessful) {
                             Toast.makeText(this@SignupFireActivity, "Authentication failed." + task.exception!!,
                                     Toast.LENGTH_SHORT).show()
                         } else {
-                            startActivity(Intent(this@SignupFireActivity, Main2Activity::class.java))
+                            //Add user to local db
                             presenter.addNewUser(email)
+                            startActivity(Intent(this@SignupFireActivity, Main2Activity::class.java))
                             finish()
                         }
                     }

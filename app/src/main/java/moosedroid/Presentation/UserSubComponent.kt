@@ -2,6 +2,7 @@ package moosedroid.Presentation
 
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
+import moosedroid.Firebase.SignupFireActivity
 
 /**
  * Created by HimelR on 17-Feb-18.
@@ -9,4 +10,9 @@ import dagger.android.AndroidInjector
 @Subcomponent interface UserSubComponent : AndroidInjector<TestUser> {
 
     @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<TestUser>()
+}
+
+@Subcomponent interface UserSubComponent2 : AndroidInjector<SignupFireActivity> {
+
+    @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<SignupFireActivity>()
 }

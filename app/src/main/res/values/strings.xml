@@ -17,6 +17,11 @@
 
     <string name="action_favorite">Fav</string>
     <string name="action_map">Map</string>
+    <string name="action_users">Users</string>
+    <string name="item_1">1</string>
+    <string name="item_2">2</string>
+    <string name="item_3">3</string>
+
     <!-- Strings related to login -->
 
     <string name="action_sign_in_short">Register</string>
