@@ -11,7 +11,6 @@ import com.acrcloud.rec.sdk.IACRCloudListener
 import com.google.firebase.auth.FirebaseAuth
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -42,12 +41,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import moosedroid.Firebase.LoginFireActivity
-import moosedroid.LocationData.LocationData
-import moosedroid.Presentation.AppModule
-import moosedroid.Presentation.SongPresenter
-import moosedroid.Room.AppDatabase
-import moosedroid.Room.Song
-import moosedroid.Room.SongDao
+import moosedroid.Presentation.ListenedPresenter
+import moosedroid.Room.Listened
 import javax.inject.Inject
 
 
@@ -76,7 +71,7 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
     private var mFusedLocationClient: FusedLocationProviderClient? = null
 
     @Inject
-    lateinit var presenter:SongPresenter
+    lateinit var presenter: ListenedPresenter
 
 
 
@@ -305,7 +300,7 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
     }
     private fun saveData(tres:String){
 
-        val serverDownloadObservable:Observable<Location?> = Observable.create {
+        val locationObservable:Observable<Location?> = Observable.create {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 mFusedLocationClient!!.lastLocation
@@ -324,11 +319,11 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
 
 
         }
-        serverDownloadObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe { location ->
+        locationObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe { location ->
 
             //Save song to use
 
-            presenter.addNewSong(Song("OWO","dsd","bob",2))
+            presenter.addNewSong(Listened("Ww ","dsd","bob",1))
             testBox.text = location?.longitude.toString()
             mResult?.text = tres
         }

@@ -9,7 +9,7 @@ import com.acrcloud.rec.mooseb.R
 import com.acrcloud.rec.mooseb.R.layout.activity_test_user
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_test_user.*
-import moosedroid.Room.Song
+import moosedroid.Room.Listened
 import moosedroid.Room.User
 import moosedroid.Room.UserAdapter
 import javax.inject.Inject
@@ -19,6 +19,9 @@ class TestUser : AppCompatActivity(), UserPresentation {
 
     @Inject
     lateinit var presenter: UserPresenter
+    @Inject
+    lateinit var presenter2: ListenedPresenter
+
 
     var recyclerView:RecyclerView? = null
 
@@ -34,6 +37,7 @@ class TestUser : AppCompatActivity(), UserPresentation {
 
     override fun showUsers(users: List<User>) {
         userList.adapter= UserAdapter(users)
+
     }
 
     override fun onDestroy() {
@@ -41,6 +45,7 @@ class TestUser : AppCompatActivity(), UserPresentation {
         presenter.onDestroy()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(activity_test_user)
@@ -57,6 +62,11 @@ class TestUser : AppCompatActivity(), UserPresentation {
         //val ab = supportActionBar
         //ab!!.setDisplayHomeAsUpEnabled(true)
         presenter.onCreate(this)
+
+        presenter.addNewUser("poggers")
+        var song:Listened = Listened("Owo", "monki","chicken", 1L)
+        presenter2.addNewSong(song)
+
         }
 
     }

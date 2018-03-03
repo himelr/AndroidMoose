@@ -61,7 +61,6 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     kapt "android.arch.persistence.room:compiler:1.1.0-alpha2"
 
-
     // Paging
     implementation "android.arch.paging:runtime:1.0.0-alpha5"
 

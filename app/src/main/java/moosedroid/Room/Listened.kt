@@ -10,10 +10,10 @@ import java.time.format.DateTimeFormatter
  * Created by HimelR on 21-Feb-18.
  */
 //foreignKeys = @ForeignKey(entity = User::class,parentColumns = "email",childColumns = "userId",onDelete = CASCADE)
-@Entity(tableName = "Song",foreignKeys = [(ForeignKey(entity = User::class, parentColumns = arrayOf("id"), childColumns = arrayOf("userId"), onDelete = CASCADE))])
+@Entity(tableName = "Listened",foreignKeys = [(ForeignKey(entity = User::class, parentColumns = arrayOf("id"), childColumns = arrayOf("userId"), onDelete = CASCADE))])
 
 
-data class Song(@ColumnInfo(name = "name") var name: String, @ColumnInfo(name = "genre") var genre: String, @ColumnInfo(name = "album") var album: String, @ColumnInfo(name = "userId")
+data class Listened(@ColumnInfo(name = "name") var name: String, @ColumnInfo(name = "genre") var genre: String, @ColumnInfo(name = "album") var album: String, @ColumnInfo(name = "userId")
 var userId:Long) {
 
     @ColumnInfo(name = "id")

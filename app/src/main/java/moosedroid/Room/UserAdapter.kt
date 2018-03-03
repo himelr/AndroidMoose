@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.activity_test_user.view.*
         fun bind(user: User) = with(itemView) {
             //val taskCb = findViewById(R.id.recycleUser) as android.widget.CheckBox
             val userView = findViewById<TextView>(com.acrcloud.rec.mooseb.R.id.item2)
-            userView.text = user.email
+            userView.text = user.email + user.id
         }
     }
 }

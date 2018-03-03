@@ -16,6 +16,7 @@
     <string name="cancel">Cancel</string>
 
     <string name="action_favorite">Fav</string>
+    <string name="action_map">Map</string>
     <!-- Strings related to login -->
 
     <string name="action_sign_in_short">Register</string>
