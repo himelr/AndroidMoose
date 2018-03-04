@@ -63,9 +63,9 @@ class TestUser : AppCompatActivity(), UserPresentation {
         //ab!!.setDisplayHomeAsUpEnabled(true)
         presenter.onCreate(this)
 
-        presenter.addNewUser("poggers")
+    /*    presenter.addNewUser("poggers")
         var song:Listened = Listened("Owo", "monki","chicken", 1L)
-        presenter2.addNewSong(song)
+        presenter2.addNewSong(song)*/
 
         }
 

@@ -43,12 +43,15 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import moosedroid.Firebase.LoginFireActivity
 import moosedroid.Presentation.ListenedPresenter
+import moosedroid.Presentation.TestUser
 import moosedroid.Room.Listened
 import javax.inject.Inject
 
 
 
-class Main2Activity : AppCompatActivity(), IACRCloudListener {
+class Main2Activity : MenuBaseActivity(), IACRCloudListener {
+
+
     private val TEST = "test2"
     private val mClient: ACRCloudClient = ACRCloudClient()
     private val mConfig: ACRCloudConfig = ACRCloudConfig()
@@ -67,19 +70,21 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
     private val MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 23
     private val MY_PERMISSIONS_REQUEST_LOCATION_DATA = 24
 
-    private val auth = FirebaseAuth.getInstance()
     private var compositeDisposable = CompositeDisposable()
     private var mFusedLocationClient: FusedLocationProviderClient? = null
 
     @Inject
     lateinit var presenter: ListenedPresenter
 
+    override fun getLayoutResourceId(): Int {
+        return activity_main
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(activity_main)
+        //setContentView(activity_main)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
          Log.d(TEST, "launch")
@@ -134,38 +139,14 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
         if (this.initState) {
             this.mClient.startPreRecord(3000) //start prerecord, you can call "this.mClient.stopPreRecord()" to stop prerecord.
         }
-        val myToolbar = findViewById<Toolbar>(R.id.my_toolbar2)
-        setSupportActionBar(myToolbar)
-        val ab = supportActionBar
 
-        val bottomNavigationView:BottomNavigationView = findViewById(R.id.navigation)
 
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
 
-            when (item.itemId) {
-                R.id.action_item1 -> Log.d("test2", "1")
-                R.id.action_item2 -> Log.d("test2", "2")
-                R.id.action_item3 -> Log.d("test2", "3")
-            }
-
-            true
-        }
 
         // Enable the Up button
         //ab!!.setDisplayHomeAsUpEnabled(true)
 
-        val authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            val user = firebaseAuth.currentUser
-            if (user == null) {
-                println("Logout Firex")
-                Log.d(TEST, "logout")
-                // user auth state is changed - user is null
-                // launch login activity
-                startActivity(Intent(this, LoginFireActivity::class.java))
-                finish()
-            }
-        }
-        auth.addAuthStateListener(authListener)
+
 
         val serverDownloadObservable:Observable<Int> = Observable.create {
             SystemClock.sleep(5000)
@@ -233,11 +214,7 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.actionbar, menu)
-        return true
-    }
+
 
     // Old api
 
@@ -406,34 +383,5 @@ class Main2Activity : AppCompatActivity(), IACRCloudListener {
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_settings ->
-                // User chose the "Settings" item, show the app settings UI...
-                return true
 
-            R.id.action_favorite -> {
-                val alertDialog = AlertDialog.Builder(this).create()
-                alertDialog.setTitle("Logout")
-                alertDialog.setMessage("Are you sure you want to logout?")
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "NO"
-                ) { dialog, which -> dialog.dismiss() }
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "YES"
-                ) { dialog, which ->
-                    if (auth.currentUser != null) {
-                        auth.signOut()
-                    }
-
-                    //dialog.dismiss();
-                }
-                alertDialog.show()
-                return true
-            }
-
-            else ->
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item)
-        }
-    }
 }
