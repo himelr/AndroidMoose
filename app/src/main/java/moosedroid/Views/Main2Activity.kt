@@ -307,8 +307,6 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
                         })
             } else {
             }
-
-
         }
         locationObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe { location ->
 

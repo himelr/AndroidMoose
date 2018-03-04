@@ -52,7 +52,7 @@
         </activity>
         <activity android:name="moosedroid.Firebase.SignupFireActivity" />
         <activity android:name="moosedroid.Firebase.ResetPasswordFireActivity" />
-        <activity android:name="moosedroid.Presentation.TestUser">
+        <activity android:name="moosedroid.Presentation.TestUser" android:launchMode="singleTask">
 
         </activity>
         <activity android:name="moosedroid.Views.UserListenedActivity">

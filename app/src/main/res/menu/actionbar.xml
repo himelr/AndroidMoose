@@ -17,6 +17,10 @@
         android:title="@string/action_users"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/listened"
+        android:title="@string/action_listened"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/Map"
         android:title="@string/action_map"
         app:showAsAction="never"/>

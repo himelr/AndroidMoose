@@ -11,8 +11,11 @@ import android.view.Menu
 import android.view.MenuItem
 import com.acrcloud.rec.mooseb.R
 import com.google.firebase.auth.FirebaseAuth
+import dagger.android.AndroidInjection
 import moosedroid.Firebase.LoginFireActivity
 import moosedroid.Presentation.TestUser
+import moosedroid.Presentation.UserPresenter
+import javax.inject.Inject
 
 /**
  * Created by HimelR on 04-Mar-18.
@@ -21,8 +24,12 @@ abstract class MenuBaseActivity : AppCompatActivity(){
     protected val auth = FirebaseAuth.getInstance()!!
     protected abstract fun getLayoutResourceId(): Int
 
+    @Inject
+    protected lateinit var userPresenter: UserPresenter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(getLayoutResourceId())
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.navigation)
@@ -40,7 +47,7 @@ abstract class MenuBaseActivity : AppCompatActivity(){
 
         val myToolbar = findViewById<Toolbar>(R.id.my_toolbar2)
         setSupportActionBar(myToolbar)
-        val ab = supportActionBar
+        //val ab = supportActionBar
 
         val authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
@@ -87,6 +94,12 @@ abstract class MenuBaseActivity : AppCompatActivity(){
             R.id.users -> {
 
                 startActivity(Intent(this, TestUser::class.java))
+                return true
+
+            }
+            R.id.listened -> {
+
+                startActivity(Intent(this, UserListenedActivity::class.java))
                 return true
 
             }

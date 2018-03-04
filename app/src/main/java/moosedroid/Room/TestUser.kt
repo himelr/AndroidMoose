@@ -12,9 +12,13 @@ import kotlinx.android.synthetic.main.activity_test_user.*
 import moosedroid.Room.Listened
 import moosedroid.Room.User
 import moosedroid.Room.UserAdapter
+import moosedroid.Views.MenuBaseActivity
 import javax.inject.Inject
 
-class TestUser : AppCompatActivity(), UserPresentation {
+class TestUser : MenuBaseActivity(), UserPresentation {
+    override fun getLayoutResourceId(): Int {
+    return activity_test_user
+    }
 
 
     @Inject
@@ -68,6 +72,7 @@ class TestUser : AppCompatActivity(), UserPresentation {
         presenter2.addNewSong(song)*/
 
         }
+
 
     }
 

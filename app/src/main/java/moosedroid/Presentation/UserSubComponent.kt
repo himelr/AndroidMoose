@@ -3,6 +3,7 @@ package moosedroid.Presentation
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
 import moosedroid.Firebase.SignupFireActivity
+import moosedroid.Views.MenuBaseActivity
 
 /**
  * Created by HimelR on 17-Feb-18.
@@ -16,3 +17,9 @@ import moosedroid.Firebase.SignupFireActivity
 
     @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<SignupFireActivity>()
 }
+
+@Subcomponent interface UserSubComponent3 : AndroidInjector<MenuBaseActivity> {
+
+    @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<MenuBaseActivity>()
+}
+
