@@ -18,4 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/president_item" />
+
+   <include layout="@layout/bottombar"/>
+
 </android.support.constraint.ConstraintLayout>

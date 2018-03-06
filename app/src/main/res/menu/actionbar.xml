@@ -21,7 +21,7 @@
         android:title="@string/action_listened"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/Map"
+    <item android:id="@+id/listenedMap"
         android:title="@string/action_map"
         app:showAsAction="never"/>
 

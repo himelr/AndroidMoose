@@ -45,6 +45,8 @@ import moosedroid.Firebase.LoginFireActivity
 import moosedroid.Presentation.ListenedPresenter
 import moosedroid.Presentation.TestUser
 import moosedroid.Room.Listened
+import moosedroid.Room.User
+import org.json.JSONArray
 import javax.inject.Inject
 
 
@@ -257,6 +259,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
                         val artist = art.getString("name")
                         tres = tres + (i + 1) + ".  Title: " + title + "    Artist: " + artist + "\n"
                     }
+                    saveData(musics, tres)
                 }
                 if (metadata.has("streams")) {
                     val musics = metadata.getJSONArray("streams")
@@ -285,11 +288,10 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
 
             e.printStackTrace()
         }
-        saveData(tres)
 
 
     }
-    private fun saveData(tres:String){
+    private fun saveData(musics:JSONArray, tres:String){
 
         val locationObservable:Observable<Location?> = Observable.create {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -297,13 +299,10 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
                 mFusedLocationClient!!.lastLocation
                         .addOnSuccessListener(this, { location ->
                             // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
                                 // Logic to handle location object
-                                Log.d("test2",location.longitude.toString())
                                 it.onNext(location)
                                 it.onComplete()
 
-                            }
                         })
             } else {
             }
@@ -311,8 +310,13 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
         locationObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe { location ->
 
             //Save song to use
-
-            presenter.addNewSong(Listened("Ww ","dsd","bob",1))
+            val tt = musics.get(0) as JSONObject
+            val title:String = tt.getString("title")
+            val artistt = tt.getJSONArray("artists")
+            val art = artistt.get(0) as JSONObject
+            val artist:String = art.getString("name")
+            val user:User? = userPresenter.userDao.findUserByEmail(auth.currentUser?.email!!)
+            presenter.addNewSong(Listened(title+"",artist+"","bob","-",user?.id!!, location?.latitude ?: 0.0,location?.longitude  ?: 0.0))
             testBox.text = location?.longitude.toString()
             mResult?.text = tres
         }

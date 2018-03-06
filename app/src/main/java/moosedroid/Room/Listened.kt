@@ -13,8 +13,8 @@ import java.time.format.DateTimeFormatter
 @Entity(tableName = "Listened",foreignKeys = [(ForeignKey(entity = User::class, parentColumns = arrayOf("id"), childColumns = arrayOf("userId"), onDelete = CASCADE))])
 
 
-data class Listened(@ColumnInfo(name = "name") var name: String, @ColumnInfo(name = "genre") var genre: String, @ColumnInfo(name = "album") var album: String, @ColumnInfo(name = "userId")
-var userId:Long) {
+data class Listened(@ColumnInfo(name = "title") var title: String, @ColumnInfo(name = "artist") var artist: String, @ColumnInfo(name = "genre") var genre: String, @ColumnInfo(name = "album") var album: String, @ColumnInfo(name = "userId")
+var userId:Long, @ColumnInfo(name = "latitude") var latitude:Double? = 0.0,  @ColumnInfo(name = "longitude") var longitude:Double? = 0.0) {
 
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
@@ -23,11 +23,9 @@ var userId:Long) {
     @ColumnInfo(name = "date")
     var date: String? = null
 
-
     init {
         date = TiviTypeConverters.fromOffsetDateTime(OffsetDateTime.now())
     }
-
 
     object TiviTypeConverters {
         private val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME

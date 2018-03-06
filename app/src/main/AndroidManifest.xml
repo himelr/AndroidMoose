@@ -32,14 +32,10 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".LoginActivity" />
-        <activity android:name="moosedroid.Views.Main2Activity">
-      </activity>
-
+        <activity android:name="moosedroid.Views.Main2Activity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
-
-
         <activity android:name=".SignupActivity" />
         <activity android:name=".SignUp" />
         <activity android:name=".ResetPasswordActivity" />
@@ -52,12 +48,20 @@
         </activity>
         <activity android:name="moosedroid.Firebase.SignupFireActivity" />
         <activity android:name="moosedroid.Firebase.ResetPasswordFireActivity" />
-        <activity android:name="moosedroid.Presentation.TestUser" android:launchMode="singleTask">
+        <activity
+            android:name="moosedroid.Presentation.TestUser"
+            android:launchMode="singleTask" />
+        <activity android:name="moosedroid.Views.UserListenedActivity" />
+        <activity android:name="moosedroid.Views.ListenedSongActivity" />
+        <activity android:name="moosedroid.Views.ListenedActivity" />
 
-        </activity>
-        <activity android:name="moosedroid.Views.UserListenedActivity">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAGZEnFVDQxTtA4DkK4HlplQm5MM-CvNdw" />
 
-        </activity>
+        <activity
+            android:name="moosedroid.Views.MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
     </application>
 
 </manifest>

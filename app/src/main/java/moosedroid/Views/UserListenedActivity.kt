@@ -17,7 +17,12 @@ import moosedroid.Room.Listened
 import moosedroid.Room.User
 import javax.inject.Inject
 
-class UserListenedActivity : AppCompatActivity(), ListenedPresentation {
+class UserListenedActivity : MenuBaseActivity(), ListenedPresentation {
+
+    override fun getLayoutResourceId(): Int {
+        return R.layout.activity_user_listened
+    }
+
     @Inject
     lateinit var presenter2: ListenedPresenter
 
@@ -46,13 +51,13 @@ class UserListenedActivity : AppCompatActivity(), ListenedPresentation {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_listened)
+
         recyclerView = findViewById(R.id.listenedListRC)
         recyclerView?.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         recyclerView?.adapter = ListenedAdapter(emptyList())
         presenter2.onCreate(this,1)
-        var song:Listened = Listened("Owo", "monki","chicken", 1L)
-        //presenter2.addNewSong(song)
+        var song:Listened = Listened("Owo","d","monki","chicken", 1L,0.0,0.0)
+        presenter2.addNewSong(song)
 
         //recyclerView?.adapter = ListenedAdapter()
     }

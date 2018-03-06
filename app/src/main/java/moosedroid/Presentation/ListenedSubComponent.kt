@@ -2,6 +2,8 @@ package moosedroid.Presentation
 
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
+import moosedroid.Views.Fragments.ListenedFragment
+import moosedroid.Views.ListenedSongActivity
 import moosedroid.Views.Main2Activity
 import moosedroid.Views.UserListenedActivity
 
@@ -18,4 +20,9 @@ interface ListenedSubComponent : AndroidInjector<Main2Activity> {
 interface ListenedSubComponent2 : AndroidInjector<UserListenedActivity> {
 
     @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<UserListenedActivity>()
+}
+@Subcomponent
+interface ListenedSubComponent3 : AndroidInjector<ListenedSongActivity> {
+
+    @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<ListenedSongActivity>()
 }

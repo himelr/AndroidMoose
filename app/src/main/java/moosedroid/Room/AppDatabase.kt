@@ -1,7 +1,9 @@
 package moosedroid.Room
 
 import android.arch.persistence.room.Database
+import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
+import android.content.Context
 
 /**
  * Created by HimelR on 17-Feb-18.
@@ -12,6 +14,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun listenedDao(): ListenedDao
+
 
 
 }

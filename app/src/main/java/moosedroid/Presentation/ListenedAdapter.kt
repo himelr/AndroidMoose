@@ -26,7 +26,7 @@ class ListenedAdapter(var listenedList: List<Listened>) : android.support.v7.wid
         fun bind(listened: Listened) = with(itemView) {
             //val taskCb = findViewById(R.id.recycleUser) as android.widget.CheckBox
             val listenedView = findViewById<TextView>(com.acrcloud.rec.mooseb.R.id.item2)
-            listenedView.text = listened.name
+            listenedView.text = listened.title + "--" + listened.artist
 
         }
     }

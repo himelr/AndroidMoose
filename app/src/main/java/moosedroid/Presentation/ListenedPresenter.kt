@@ -16,6 +16,7 @@ class ListenedPresenter @Inject constructor(val listenedDao: ListenedDao) {
     var listenedList = ArrayList<Listened>()
     var presentation: ListenedPresentation? = null
 
+
     fun onCreate(listenedPresentation: ListenedPresentation, id : Long){
 
         presentation = listenedPresentation
@@ -24,6 +25,7 @@ class ListenedPresenter @Inject constructor(val listenedDao: ListenedDao) {
 
     fun addNewSong(listened: Listened){
         listenedDao.insertSong(listened)
+        Log.d("test2","song added")
     }
 
     fun loadSongs(id: Long){

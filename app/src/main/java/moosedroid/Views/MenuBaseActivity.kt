@@ -28,6 +28,7 @@ abstract class MenuBaseActivity : AppCompatActivity(){
     protected lateinit var userPresenter: UserPresenter
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -100,6 +101,12 @@ abstract class MenuBaseActivity : AppCompatActivity(){
             R.id.listened -> {
 
                 startActivity(Intent(this, UserListenedActivity::class.java))
+                return true
+
+            }
+            R.id.listenedMap -> {
+
+                startActivity(Intent(this, ListenedSongActivity::class.java))
                 return true
 
             }
