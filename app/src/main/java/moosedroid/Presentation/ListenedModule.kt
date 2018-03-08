@@ -9,6 +9,7 @@ import dagger.android.AndroidInjector
 import dagger.android.FragmentKey
 import dagger.multibindings.IntoMap
 import moosedroid.Views.Fragments.ListenedFragment
+import moosedroid.Views.ListenedDetailActivity
 import moosedroid.Views.ListenedSongActivity
 import moosedroid.Views.Main2Activity
 import moosedroid.Views.UserListenedActivity
@@ -43,4 +44,13 @@ abstract class ListenedModule3 {
     @IntoMap
     @ActivityKey(ListenedSongActivity::class)
     internal abstract fun bindsToDoActivityInjectorFactory(builder: ListenedSubComponent3.Builder): AndroidInjector.Factory<out Activity>
+}
+
+@Module(subcomponents = arrayOf(ListenedSubComponent4::class))
+abstract class ListenedModule4 {
+
+    @Binds
+    @IntoMap
+    @ActivityKey(ListenedDetailActivity::class)
+    internal abstract fun bindsToDoActivityInjectorFactory(builder: ListenedSubComponent4.Builder): AndroidInjector.Factory<out Activity>
 }

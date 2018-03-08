@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter
 
 
 data class Listened(@ColumnInfo(name = "title") var title: String, @ColumnInfo(name = "artist") var artist: String, @ColumnInfo(name = "genre") var genre: String, @ColumnInfo(name = "album") var album: String, @ColumnInfo(name = "userId")
-var userId:Long, @ColumnInfo(name = "latitude") var latitude:Double? = 0.0,  @ColumnInfo(name = "longitude") var longitude:Double? = 0.0) {
+var userId:Long, @ColumnInfo(name = "latitude") var latitude:Double? = 0.0,  @ColumnInfo(name = "longitude") var longitude:Double? = 0.0,@ColumnInfo(name = "youtubeId") var youtubeId:String?) {
 
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)

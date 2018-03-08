@@ -61,7 +61,12 @@
 
         <activity
             android:name="moosedroid.Views.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity android:name="moosedroid.Views.ListenedDetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="moosedroid.Views.UserListenedActivity" />
+        </activity>
     </application>
 
 </manifest>

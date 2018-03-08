@@ -341,11 +341,11 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
             val user:User? = userPresenter.userDao.findUserByEmail(auth.currentUser?.email!!)
 
             if (locationFine != null){
-                presenter.addNewSong(Listened(title+"",artist+"","bob","-",user?.id!!, locationFine?.latitude ?: 0.0,locationFine?.longitude  ?: 0.0))
+                presenter.addNewSong(Listened(title+"",artist+"","bob","-",user?.id!!, locationFine?.latitude ?: 0.0,locationFine?.longitude  ?: 0.0,video))
                 Log.d("test2","fine"+ locationFine.latitude + " " + location.longitude)
             }
             else{
-                presenter.addNewSong(Listened(title+"",artist+"","bob","-",user?.id!!, location?.latitude ?: 0.0,location?.longitude  ?: 0.0))
+                presenter.addNewSong(Listened(title+"",artist+"","bob","-",user?.id!!, location?.latitude ?: 0.0,location?.longitude  ?: 0.0, video))
             }
 
 

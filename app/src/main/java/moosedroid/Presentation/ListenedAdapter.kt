@@ -1,11 +1,16 @@
 package moosedroid.Presentation
 
+import android.content.Context
+import android.content.Intent
+import android.support.v4.content.ContextCompat.startActivity
+
 import android.util.Log
 import android.widget.TextView
 import moosedroid.Room.Listened
+import moosedroid.Views.ListenedDetailActivity
 
 
-class ListenedAdapter(var listenedList: List<Listened>) : android.support.v7.widget.RecyclerView.Adapter<ListenedAdapter.ListenedViewHolder>() {
+class ListenedAdapter(var listenedList: List<Listened>,var context: Context) : android.support.v7.widget.RecyclerView.Adapter<ListenedAdapter.ListenedViewHolder>() {
 
     override fun onCreateViewHolder(parent: android.view.ViewGroup, type: Int): ListenedViewHolder {
         return ListenedViewHolder(parent)
@@ -15,7 +20,11 @@ class ListenedAdapter(var listenedList: List<Listened>) : android.support.v7.wid
 
         viewHolder.bind(listenedList[position])
         viewHolder.itemView.setOnClickListener({
-            println("CLicked")
+            val intent = Intent(context,ListenedDetailActivity::class.java)
+            intent.putExtra("id",listenedList[position].id.toString() + "")
+            intent.putExtra("userId",listenedList[position].userId.toString() + "")
+
+            startActivity(context,intent,null)
         })
     }
 

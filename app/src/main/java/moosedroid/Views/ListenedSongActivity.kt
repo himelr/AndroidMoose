@@ -22,10 +22,11 @@ import javax.inject.Inject
 
 class ListenedSongActivity : FragmentActivity(),OnMapReadyCallback,ListenedFragment.OnListFragmentInteractionListener, ListenedPresentation {
 
-    private lateinit var mMap: GoogleMap
     @Inject
     lateinit var presenter2: ListenedPresenter
-    var listenedFragment:ListenedFragment? = null
+
+    private lateinit var mMap: GoogleMap
+    private var listenedFragment:ListenedFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)

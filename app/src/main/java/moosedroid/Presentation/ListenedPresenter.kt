@@ -28,6 +28,17 @@ class ListenedPresenter @Inject constructor(val listenedDao: ListenedDao) {
         Log.d("test2","song added")
     }
 
+    fun getListened(id:Long) : Listened? {
+
+        for (listened in listenedList){
+            if(listened.id == id){
+                return listened
+            }
+        }
+        return null
+    }
+
+
     fun loadSongs(id: Long){
         compositeDisposable.add(listenedDao.findSongsById(id)
                 .subscribeOn(Schedulers.io())
