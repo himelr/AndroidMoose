@@ -11,9 +11,12 @@ import com.acrcloud.rec.sdk.IACRCloudListener
 import com.google.firebase.auth.FirebaseAuth
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.os.Environment
 import android.os.SystemClock
@@ -34,6 +37,7 @@ import android.widget.Toast
 import com.acrcloud.rec.mooseb.R
 import com.acrcloud.rec.mooseb.R.layout.*
 import com.google.android.gms.location.FusedLocationProviderClient
+
 import com.google.android.gms.location.LocationServices
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
@@ -74,6 +78,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
 
     private var compositeDisposable = CompositeDisposable()
     private var mFusedLocationClient: FusedLocationProviderClient? = null
+    private var mlocationManager:LocationManager? = null
 
     @Inject
     lateinit var presenter: ListenedPresenter
@@ -88,6 +93,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
         super.onCreate(savedInstanceState)
         //setContentView(activity_main)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        mlocationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
          Log.d(TEST, "launch")
         path = Environment.getExternalStorageDirectory().toString() + "/acrcloud/model"
@@ -167,13 +173,14 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
     fun start() {
         println("aaaeweweww")
         if (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             println("aaa")
 
 
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                            Manifest.permission.RECORD_AUDIO) || ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_COARSE_LOCATION) ) {
+                            Manifest.permission.RECORD_AUDIO) || ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_COARSE_LOCATION) || ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION) ) {
 
 
                 // Show an explanation to the user *asynchronously* -- don't block
@@ -185,7 +192,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
                 // No explanation needed, we can request the permission.
 
                 ActivityCompat.requestPermissions(this,
-                        arrayOf(Manifest.permission.RECORD_AUDIO,Manifest.permission.ACCESS_COARSE_LOCATION),
+                        arrayOf(Manifest.permission.RECORD_AUDIO,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION),
                         MY_PERMISSIONS_REQUEST_RECORD_AUDIO)
 
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
@@ -223,6 +230,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
 
 
     override fun onResult(result: String) {
+        Log.d("test2",result)
         if (this.mClient != null) {
             this.mClient.cancel()
             mProcessing = false
@@ -259,7 +267,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
                         val artist = art.getString("name")
                         tres = tres + (i + 1) + ".  Title: " + title + "    Artist: " + artist + "\n"
                     }
-                    saveData(musics, tres)
+
                 }
                 if (metadata.has("streams")) {
                     val musics = metadata.getJSONArray("streams")
@@ -278,7 +286,10 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
                         tres = tres + (i + 1) + ".  Title: " + title + "\n"
                     }
                 }
+
+                val musics = metadata.getJSONArray("music")
                 tres = tres + "\n\n" + result
+                saveData(musics, result)
             } else {
                 tres = result
 
@@ -295,7 +306,9 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
 
         val locationObservable:Observable<Location?> = Observable.create {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
+
                 mFusedLocationClient!!.lastLocation
                         .addOnSuccessListener(this, { location ->
                             // Got last known location. In some rare situations this can be null.
@@ -308,7 +321,17 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
             }
         }
         locationObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe { location ->
+            val j = JSONObject(tres)
+            val metadata = j.getJSONObject("metadata")
+            val music = metadata.getJSONArray("music")
+            val external:JSONObject? = music.getJSONObject(0)
+            val youtube:JSONObject? = external?.getJSONObject("external_metadata")
+            val youtubeId:JSONObject? = youtube?.getJSONObject("youtube")
+            val video:String? = youtubeId?.getString("vid")
 
+            Log.d("test2",video.toString())
+
+            val locationFine = mlocationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             //Save song to use
             val tt = musics.get(0) as JSONObject
             val title:String = tt.getString("title")
@@ -316,7 +339,16 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
             val art = artistt.get(0) as JSONObject
             val artist:String = art.getString("name")
             val user:User? = userPresenter.userDao.findUserByEmail(auth.currentUser?.email!!)
-            presenter.addNewSong(Listened(title+"",artist+"","bob","-",user?.id!!, location?.latitude ?: 0.0,location?.longitude  ?: 0.0))
+
+            if (locationFine != null){
+                presenter.addNewSong(Listened(title+"",artist+"","bob","-",user?.id!!, locationFine?.latitude ?: 0.0,locationFine?.longitude  ?: 0.0))
+                Log.d("test2","fine"+ locationFine.latitude + " " + location.longitude)
+            }
+            else{
+                presenter.addNewSong(Listened(title+"",artist+"","bob","-",user?.id!!, location?.latitude ?: 0.0,location?.longitude  ?: 0.0))
+            }
+
+
             testBox.text = location?.longitude.toString()
             mResult?.text = tres
         }
@@ -331,14 +363,18 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
 
     }
 
+
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             MY_PERMISSIONS_REQUEST_RECORD_AUDIO -> {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED ) {
-                    recognizeMusic()
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED   && grantResults[2] == PackageManager.PERMISSION_GRANTED ) {
 
+                   /* val locationListener: LocationListener? = null
+
+                    mlocationManager?.requestLocationUpdates(
+                            LocationManager.GPS_PROVIDER, 5000L, 10.0f, locationListener!!)*/
 
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.

@@ -1,14 +1,11 @@
 package moosedroid.Views.Fragments;
 
-import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,29 +13,13 @@ import android.view.ViewGroup;
 
 import com.acrcloud.rec.mooseb.R;
 
-import org.jetbrains.annotations.NotNull;
-
-import dagger.android.AndroidInjection;
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasActivityInjector;
-import dagger.android.support.HasSupportFragmentInjector;
-import moosedroid.Presentation.ListenedPresentation;
 import moosedroid.Presentation.ListenedPresenter;
 import moosedroid.Room.AppDatabase;
-import moosedroid.Room.AppDatabase_Impl;
 import moosedroid.Room.Listened;
-import moosedroid.Room.ListenedDao;
-import moosedroid.Room.ListenedDao_Impl;
 import moosedroid.Room.ListenedViewModel;
-import moosedroid.Room.UserDao;
-import moosedroid.Room.UserDao_Impl;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.inject.Inject;
 
 
 /**
@@ -128,8 +109,12 @@ public class ListenedFragment extends Fragment  {
     }
 
     public void addList(List<Listened> list){
-        recyclerView.setAdapter(new MyListenedRecyclerViewAdapter(list, mListener));
+        getRecyclerView().setAdapter(new MyListenedRecyclerViewAdapter(list, mListener));
 
+    }
+
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
     }
 
 

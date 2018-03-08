@@ -57,7 +57,7 @@ class UserListenedActivity : MenuBaseActivity(), ListenedPresentation {
         recyclerView?.adapter = ListenedAdapter(emptyList())
         presenter2.onCreate(this,1)
         var song:Listened = Listened("Owo","d","monki","chicken", 1L,0.0,0.0)
-        presenter2.addNewSong(song)
+        //presenter2.addNewSong(song)
 
         //recyclerView?.adapter = ListenedAdapter()
     }
