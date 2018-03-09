@@ -10,4 +10,5 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="moosedroid.Views.Fragments.ListenedFragment"
-    tools:listitem="@layout/fragment_listened" />
+    tools:listitem="@layout/fragment_listened"
+    android:divider="@drawable/list_divider" android:dividerHeight="1px"/>

@@ -329,6 +329,9 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
             val youtubeId:JSONObject? = youtube?.getJSONObject("youtube")
             val video:String? = youtubeId?.getString("vid")
 
+            val album:JSONObject? = external?.getJSONObject("album")
+            val alName:String? = album?.getString("name")
+
             Log.d("test2",video.toString())
 
             val locationFine = mlocationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
@@ -341,7 +344,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
             val user:User? = userPresenter.userDao.findUserByEmail(auth.currentUser?.email!!)
 
             if (locationFine != null){
-                presenter.addNewSong(Listened(title+"",artist+"","bob","-",user?.id!!, locationFine?.latitude ?: 0.0,locationFine?.longitude  ?: 0.0,video))
+                presenter.addNewSong(Listened(title+"",artist+"","bob",alName ?: "",user?.id!!, locationFine?.latitude ?: 0.0,locationFine?.longitude  ?: 0.0,video))
                 Log.d("test2","fine"+ locationFine.latitude + " " + location.longitude)
             }
             else{

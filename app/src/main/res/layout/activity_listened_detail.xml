@@ -34,7 +34,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingLeft="5dp">
+                <TableRow
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="43dp"
+                        android:layout_column="1"
+                        android:width="150dp"
+                        android:text="Album"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:text=""
+                        android:textSize="22sp"
+                        android:id="@+id/text_album"
+                        />
+                </TableRow>
                 <TableRow
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp">
@@ -81,6 +101,11 @@
 
 
             </TableLayout>
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapView3"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
         </LinearLayout>
     </ScrollView>
 

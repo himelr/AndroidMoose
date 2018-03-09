@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.acrcloud.rec.mooseb.R;
@@ -39,8 +40,9 @@ public class MyListenedRecyclerViewAdapter extends RecyclerView.Adapter<MyListen
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getArtist());
-        holder.mContentView.setText(mValues.get(position).getTitle());
+        holder.mContentView.setText(mValues.get(position).getArtist());
+        holder.mIdView.setText(mValues.get(position).getTitle());
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +71,8 @@ public class MyListenedRecyclerViewAdapter extends RecyclerView.Adapter<MyListen
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
+
+
         }
 
         @Override

@@ -11,21 +11,27 @@ import android.widget.Toast
 import com.google.android.youtube.player.YouTubeInitializationResult
 import android.content.Intent
 import android.content.res.Configuration
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_listened_detail.*
 import moosedroid.Presentation.ListenedPresentation
 import moosedroid.Presentation.ListenedPresenter
 import moosedroid.Room.Listened
+import moosedroid.Views.Fragments.ListenedFragment
 import javax.inject.Inject
 
 
-class ListenedDetailActivity : YouTubeBaseActivity(),YouTubePlayer.OnInitializedListener, ListenedPresentation {
-
+class ListenedDetailActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, ListenedPresentation, OnMapReadyCallback {
 
 
     private val RECOVERY_REQUEST = 1
     private var youTubeView: YouTubePlayerView? = null
-    private var listenedId:Long? = null
+    private var listenedId: Long? = null
     private var listened: Listened? = null
     @Inject
     lateinit var presenter: ListenedPresenter
@@ -42,17 +48,27 @@ class ListenedDetailActivity : YouTubeBaseActivity(),YouTubePlayer.OnInitialized
         val message2 = intent.getStringExtra("userId")
 
         listenedId = message.toLong()
-        presenter.onCreate(this,message2.toLong())
+        presenter.onCreate(this, message2.toLong())
 
         youTubeView = findViewById(R.id.youtube_view)
         youTubeView?.initialize(Config().YOUTUBE_API_KEY, this)
 
+        mapView3.onCreate(savedInstanceState)
+        mapView3.getMapAsync(this)
+
 
     }
 
+    override fun onMapReady(map: GoogleMap) {
+        val loca = LatLng(listened?.latitude!!, listened?.longitude!!)
+        map.addMarker(MarkerOptions().position(loca).title("Song Found"))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loca, 17.0f))
+    }
+
+
     override fun onInitializationSuccess(provider: YouTubePlayer.Provider, player: YouTubePlayer, wasRestored: Boolean) {
         if (!wasRestored) {
-            val listened:Listened? = presenter.getListened(listenedId!!)
+            val listened: Listened? = presenter.getListened(listenedId!!)
             this.listened = listened
             player.cueVideo(listened?.youtubeId)
 
@@ -80,16 +96,17 @@ class ListenedDetailActivity : YouTubeBaseActivity(),YouTubePlayer.OnInitialized
     }
 
 
-    private fun updateData(){
+    private fun updateData() {
         text_artist.text = listened?.title + " by " + listened?.artist
         text_genre.text = listened?.genre
         text_date.text = listened?.date
+        text_album.text = listened?.album
 
     }
 
     override fun showListened(listenedList: List<Listened>) {
-        for (liste in listenedList){
-            if (liste.id == listenedId){
+        for (liste in listenedList) {
+            if (liste.id == listenedId) {
                 listened = liste
             }
         }

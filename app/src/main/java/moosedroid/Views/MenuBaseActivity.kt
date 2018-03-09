@@ -38,8 +38,8 @@ abstract class MenuBaseActivity : AppCompatActivity(){
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
 
             when (item.itemId) {
-                R.id.action_item1 -> Log.d("test2", "1")
-                R.id.action_item2 -> Log.d("test2", "2")
+                R.id.action_item1 -> startActivity(Intent(this,Main2Activity::class.java))
+                R.id.action_item2 -> startActivity(Intent(this,ListenedSongActivity::class.java))
                 R.id.action_item3 -> Log.d("test2", "4")
             }
 
