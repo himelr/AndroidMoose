@@ -2,11 +2,8 @@ package moosedroid.Presentation
 
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
+import moosedroid.Views.*
 import moosedroid.Views.Fragments.ListenedFragment
-import moosedroid.Views.ListenedDetailActivity
-import moosedroid.Views.ListenedSongActivity
-import moosedroid.Views.Main2Activity
-import moosedroid.Views.UserListenedActivity
 
 /**
  * Created by HimelR on 24-Feb-18.
@@ -32,3 +29,14 @@ interface ListenedSubComponent4 : AndroidInjector<ListenedDetailActivity> {
 
     @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<ListenedDetailActivity>()
 }
+@Subcomponent
+interface ListenedSubComponent5 : AndroidInjector<WebBoardActivity> {
+
+    @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<WebBoardActivity>()
+}
+/*
+@Subcomponent
+interface ListenedSubComponent6 : AndroidInjector<MenuBaseActivity> {
+
+    @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<MenuBaseActivity>()
+}*/

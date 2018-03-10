@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.content.ContextCompat.startActivity
 
-import android.util.Log
 import android.widget.TextView
 import moosedroid.Room.Listened
 import moosedroid.Views.ListenedDetailActivity
@@ -30,7 +29,7 @@ class ListenedAdapter(var listenedList: List<Listened>,var context: Context) : a
 
     override fun getItemCount(): Int = listenedList.size
 
-    inner class ListenedViewHolder(parent: android.view.ViewGroup) : android.support.v7.widget.RecyclerView.ViewHolder(android.view.LayoutInflater.from(parent.context).inflate(com.acrcloud.rec.mooseb.R.layout.president_item, parent, false)) {
+    inner class ListenedViewHolder(parent: android.view.ViewGroup) : android.support.v7.widget.RecyclerView.ViewHolder(android.view.LayoutInflater.from(parent.context).inflate(com.acrcloud.rec.mooseb.R.layout.list_item, parent, false)) {
 
         fun bind(listened: Listened) = with(itemView) {
             //val taskCb = findViewById(R.id.recycleUser) as android.widget.CheckBox

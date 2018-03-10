@@ -32,8 +32,9 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".LoginActivity" />
-        <activity android:name="moosedroid.Views.Main2Activity"
-                  android:launchMode="singleTask"/>
+        <activity
+            android:name="moosedroid.Views.Main2Activity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
@@ -68,6 +69,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="moosedroid.Views.UserListenedActivity" />
         </activity>
+        <activity android:name="moosedroid.Views.WebBoardActivity"></activity>
+        <service android:name="moosedroid.Service.WebService" />
     </application>
 
 </manifest>

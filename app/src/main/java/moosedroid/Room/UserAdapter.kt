@@ -1,10 +1,6 @@
 package moosedroid.Room
 
-import android.view.View
 import android.widget.TextView
-import com.acrcloud.rec.mooseb.R
-import com.acrcloud.rec.mooseb.R.id.*
-import kotlinx.android.synthetic.main.activity_test_user.view.*
 
 /**
  * Created by HimelR on 18-Feb-18.
@@ -25,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_test_user.view.*
 
     override fun getItemCount(): Int = users.size
 
-    inner class UserViewHolder(parent: android.view.ViewGroup) : android.support.v7.widget.RecyclerView.ViewHolder(android.view.LayoutInflater.from(parent.context).inflate(com.acrcloud.rec.mooseb.R.layout.president_item, parent, false)) {
+    inner class UserViewHolder(parent: android.view.ViewGroup) : android.support.v7.widget.RecyclerView.ViewHolder(android.view.LayoutInflater.from(parent.context).inflate(com.acrcloud.rec.mooseb.R.layout.list_item, parent, false)) {
 
         fun bind(user: User) = with(itemView) {
             //val taskCb = findViewById(R.id.recycleUser) as android.widget.CheckBox

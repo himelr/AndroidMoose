@@ -13,6 +13,7 @@ import com.acrcloud.rec.mooseb.R
 import com.google.firebase.auth.FirebaseAuth
 import dagger.android.AndroidInjection
 import moosedroid.Firebase.LoginFireActivity
+import moosedroid.Presentation.ListenedPresenter
 import moosedroid.Presentation.TestUser
 import moosedroid.Presentation.UserPresenter
 import javax.inject.Inject
@@ -29,6 +30,9 @@ abstract class MenuBaseActivity : AppCompatActivity(){
 
 
 
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -40,7 +44,7 @@ abstract class MenuBaseActivity : AppCompatActivity(){
             when (item.itemId) {
                 R.id.action_item1 -> startActivity(Intent(this,Main2Activity::class.java))
                 R.id.action_item2 -> startActivity(Intent(this,ListenedSongActivity::class.java))
-                R.id.action_item3 -> Log.d("test2", "4")
+                R.id.action_item3 -> startActivity(Intent(this,WebBoardActivity::class.java))
             }
 
             true

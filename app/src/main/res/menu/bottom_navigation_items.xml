@@ -10,6 +10,6 @@
         android:title="@string/item_2"/>
     <item
         android:id="@+id/action_item3"
-        android:icon="@drawable/ic_favorite_black_48dp"
+        android:icon="@drawable/ic_cloud_circle_black_24dp"
         android:title="@string/item_3"/>
 </menu>
