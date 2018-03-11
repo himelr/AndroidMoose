@@ -13,21 +13,26 @@ import com.acrcloud.rec.mooseb.R
 import com.google.firebase.auth.FirebaseAuth
 import dagger.android.AndroidInjection
 import moosedroid.Firebase.LoginFireActivity
+import moosedroid.Presentation.ListenedPresentation
 import moosedroid.Presentation.ListenedPresenter
 import moosedroid.Presentation.TestUser
 import moosedroid.Presentation.UserPresenter
+import moosedroid.Room.Listened
+import moosedroid.Room.User
 import javax.inject.Inject
 
 /**
  * Created by HimelR on 04-Mar-18.
  */
-abstract class MenuBaseActivity : AppCompatActivity(){
+abstract class MenuBaseActivity : AppCompatActivity(),ListenedPresentation{
     protected val auth = FirebaseAuth.getInstance()!!
     protected abstract fun getLayoutResourceId(): Int
 
     @Inject
     protected lateinit var userPresenter: UserPresenter
 
+    @Inject
+    protected lateinit var listenedPresenter: ListenedPresenter
 
 
 
@@ -97,29 +102,49 @@ abstract class MenuBaseActivity : AppCompatActivity(){
                 return true
             }
             R.id.users -> {
-
                 startActivity(Intent(this, TestUser::class.java))
                 return true
 
             }
             R.id.listened -> {
-
                 startActivity(Intent(this, UserListenedActivity::class.java))
                 return true
 
             }
             R.id.listenedMap -> {
-
                 startActivity(Intent(this, ListenedSongActivity::class.java))
                 return true
 
             }
+            R.id.populate -> {
+                val alertDialog = AlertDialog.Builder(this).create()
+                alertDialog.setTitle("Populate")
+                alertDialog.setMessage("Are you sure you want to add to songs?")
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "NO"
+                ) { dialog, which -> dialog.dismiss() }
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "YES"
+                ) { dialog, which ->
+                    val id = getLoggedId()!!
+                    listenedPresenter.onCreate(this,id)
+                    listenedPresenter.addNewSong(Listened("Battery","Metallica","Metal","Master Of Puppets",id,40.710008, -74.005322,"md3B3I7Nmvw"))
+                    listenedPresenter.addNewSong(Listened("Comfortably Numb","Pink Floyd","Rock","The Wall",id,60.451813, 22.266630,"_FrOQC-zEog"))
+
+                }
+                alertDialog.show()
+                return true
+
+
+            }
 
             else ->
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
+
                 return super.onOptionsItemSelected(item)
         }
     }
+    fun getLoggedId() : Long?{
+        val user: User? = userPresenter.userDao.findUserByEmail(auth.currentUser?.email!!)
+        return user?.id
+    }
+
 
 }

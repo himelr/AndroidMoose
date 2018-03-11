@@ -3,6 +3,7 @@ package moosedroid.Presentation
 import android.content.Context
 import android.content.Intent
 import android.support.v4.content.ContextCompat.startActivity
+import android.support.v7.app.AlertDialog
 
 import android.widget.TextView
 import moosedroid.Room.Listened
@@ -29,12 +30,14 @@ class ListenedAdapter(var listenedList: List<Listened>,var context: Context) : a
 
     override fun getItemCount(): Int = listenedList.size
 
-    inner class ListenedViewHolder(parent: android.view.ViewGroup) : android.support.v7.widget.RecyclerView.ViewHolder(android.view.LayoutInflater.from(parent.context).inflate(com.acrcloud.rec.mooseb.R.layout.list_item, parent, false)) {
+    inner class ListenedViewHolder(parent: android.view.ViewGroup) : android.support.v7.widget.RecyclerView.ViewHolder(android.view.LayoutInflater.from(parent.context).inflate(com.acrcloud.rec.mooseb.R.layout.fragment_listened, parent, false)) {
 
         fun bind(listened: Listened) = with(itemView) {
             //val taskCb = findViewById(R.id.recycleUser) as android.widget.CheckBox
-            val listenedView = findViewById<TextView>(com.acrcloud.rec.mooseb.R.id.item2)
-            listenedView.text = listened.title + "--" + listened.artist
+            val listenedView = findViewById<TextView>(com.acrcloud.rec.mooseb.R.id.id)
+            listenedView.text = listened.title
+            val listenedView2 = findViewById<TextView>(com.acrcloud.rec.mooseb.R.id.content)
+            listenedView2.text = listened.artist
 
         }
     }

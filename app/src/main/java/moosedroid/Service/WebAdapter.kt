@@ -3,19 +3,29 @@ package moosedroid.Service
 
 import android.content.Context
 import android.database.DataSetObserver
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.AsyncTask
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ListAdapter
 import android.widget.TextView
-import com.acrcloud.rec.mooseb.R.id.item2
+import com.acrcloud.rec.mooseb.R
+import com.acrcloud.rec.mooseb.R.id.*
+import com.android.volley.toolbox.ImageLoader
+import com.android.volley.toolbox.NetworkImageView
+import kotlinx.android.synthetic.main.list_item.view.*
 import moosedroid.Room.User
+import java.net.URL
 
 
 /**
  * Created by HimelR on 08-Feb-18.
  */
 class WebAdapter constructor(private val context: Context, private val item_layout: Int, private val songs: List<WebSong>) : ListAdapter {
+    private val loadImage = LoadImage(context)
 
     private val observerChangeSet: MutableSet<DataSetObserver> = hashSetOf()
 
@@ -73,10 +83,14 @@ class WebAdapter constructor(private val context: Context, private val item_layo
         }
 
         val p = songs[position]
-        convertView!!.findViewById<TextView>(item2).text = p.artist
+        convertView!!.findViewById<TextView>(item2).text = p.title
+        convertView!!.findViewById<TextView>(item3).text = p.artist
+        convertView!!.findViewById<TextView>(item4).text = p.count.toString() + " added"
 
-
+        val avatar = convertView!!.findViewById(R.id.cover) as NetworkImageView
+        avatar.setImageUrl(p.img, loadImage.getmImageLoader())
 
         return convertView!!
     }
+
 }

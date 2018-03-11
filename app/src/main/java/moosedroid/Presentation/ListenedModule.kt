@@ -59,12 +59,4 @@ abstract class ListenedModule5 {
     @ActivityKey(WebBoardActivity::class)
     internal abstract fun bindsToDoActivityInjectorFactory(builder: ListenedSubComponent5.Builder): AndroidInjector.Factory<out Activity>
 }
-/*
-@Module(subcomponents = arrayOf(ListenedSubComponent6::class))
-abstract class ListenedModule6 {
 
-    @Binds
-    @IntoMap
-    @ActivityKey(MenuBaseActivity::class)
-    internal abstract fun bindsToDoActivityInjectorFactory(builder: ListenedSubComponent6.Builder): AndroidInjector.Factory<out Activity>
-}*/

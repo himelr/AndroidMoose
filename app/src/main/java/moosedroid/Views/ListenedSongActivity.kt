@@ -56,7 +56,7 @@ class ListenedSongActivity : FragmentActivity(),OnMapReadyCallback,ListenedFragm
     }
 
     override fun onListFragmentInteraction(item: Listened?) {
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(item?.latitude!!,item?.longitude!!),17.0f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(item?.latitude!!,item?.longitude!!),15.0f))
 
         Log.d("test2",item?.genre)
     }

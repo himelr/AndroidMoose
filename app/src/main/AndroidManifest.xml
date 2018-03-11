@@ -67,9 +67,11 @@
         <activity android:name="moosedroid.Views.ListenedDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="moosedroid.Views.UserListenedActivity" />
+                android:value="moosedroid.Views.UserListenedActivity"
+                android:launchMode="singleTask" />
         </activity>
-        <activity android:name="moosedroid.Views.WebBoardActivity"></activity>
+        <activity android:name="moosedroid.Views.WebBoardActivity"
+            android:launchMode="singleTask" ></activity>
         <service android:name="moosedroid.Service.WebService" />
     </application>
 

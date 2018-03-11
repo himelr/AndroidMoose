@@ -10,6 +10,7 @@ import android.widget.ListView
 import com.acrcloud.rec.mooseb.R
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_web_board.*
+import moosedroid.Room.Listened
 import moosedroid.Service.WebAdapter
 import moosedroid.Service.WebService
 import moosedroid.Service.WebSong
@@ -19,6 +20,7 @@ import org.json.JSONObject
 import java.util.ArrayList
 
 class WebBoardActivity : MenuBaseActivity() {
+
     private var songList: List<WebSong>? = null
 
     private val receiver = object : BroadcastReceiver() {
@@ -26,10 +28,7 @@ class WebBoardActivity : MenuBaseActivity() {
             val bundle = intent.extras
             if (bundle != null) {
                 val json = bundle.getString("json")
-
-
                 try {
-
                     list(JSONArray(json))
 
                 } catch (e: JSONException) {
@@ -65,7 +64,7 @@ class WebBoardActivity : MenuBaseActivity() {
 
                 try {
                     val cover = rec.getString("cover")
-                    tempList.add(WebSong(artist = artist,count = added,img = cover))
+                    tempList.add(WebSong(artist = artist,count = added,img = cover,title = title))
                 }
                 catch (e:JSONException){}
 
@@ -93,4 +92,10 @@ class WebBoardActivity : MenuBaseActivity() {
         super.onPause()
         unregisterReceiver(receiver)
     }
+    override fun showListened(listenedList: List<Listened>) {}
+
+    override fun listenedAddedAt(position: Int) {}
+
+    override fun scrollTo(position: Int) {}
+
 }

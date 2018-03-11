@@ -16,6 +16,8 @@ import moosedroid.Views.MenuBaseActivity
 import javax.inject.Inject
 
 class TestUser : MenuBaseActivity(), UserPresentation {
+
+
     override fun getLayoutResourceId(): Int {
     return activity_test_user
     }
@@ -72,6 +74,9 @@ class TestUser : MenuBaseActivity(), UserPresentation {
         presenter2.addNewSong(song)*/
 
         }
+    override fun showListened(listenedList: List<Listened>) {}
+
+    override fun listenedAddedAt(position: Int) {}
 
 
     }

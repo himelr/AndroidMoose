@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.google.android.youtube.player.YouTubeInitializationResult
 import android.content.Intent
 import android.content.res.Configuration
+import android.support.v7.widget.Toolbar
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -62,7 +63,8 @@ class ListenedDetailActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
     override fun onMapReady(map: GoogleMap) {
         val loca = LatLng(listened?.latitude!!, listened?.longitude!!)
         map.addMarker(MarkerOptions().position(loca).title("Song Found"))
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loca, 17.0f))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loca, 15.0f))
+        map.isBuildingsEnabled = true
     }
 
 

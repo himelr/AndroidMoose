@@ -54,17 +54,15 @@ import org.json.JSONArray
 import javax.inject.Inject
 
 
-
 class Main2Activity : MenuBaseActivity(), IACRCloudListener {
-
 
     private val TEST = "test2"
     private val mClient: ACRCloudClient = ACRCloudClient()
     private val mConfig: ACRCloudConfig = ACRCloudConfig()
 
     private var mVolume: TextView? = null
-    private var mResult:TextView? = null
-    private var tv_time:TextView? = null
+    private var mResult: TextView? = null
+    private var tv_time: TextView? = null
 
     private var mProcessing = false
     private var initState = false
@@ -78,7 +76,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
 
     private var compositeDisposable = CompositeDisposable()
     private var mFusedLocationClient: FusedLocationProviderClient? = null
-    private var mlocationManager:LocationManager? = null
+    private var mlocationManager: LocationManager? = null
 
     @Inject
     lateinit var presenter: ListenedPresenter
@@ -95,7 +93,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         mlocationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
-         Log.d(TEST, "launch")
+        Log.d(TEST, "launch")
         path = Environment.getExternalStorageDirectory().toString() + "/acrcloud/model"
 
         val file = File(path)
@@ -149,38 +147,33 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
         }
 
 
-
-
         // Enable the Up button
         //ab!!.setDisplayHomeAsUpEnabled(true)
 
 
-
-        val serverDownloadObservable:Observable<Int> = Observable.create {
+        val serverDownloadObservable: Observable<Int> = Observable.create {
             SystemClock.sleep(5000)
             it.onNext(5)
             it.onComplete()
         }
         serverDownloadObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe { integer ->
             //testBox.text = integer.toString() // this methods updates the ui
-           // enables it again
+            // enables it again
         }
-
 
 
     }
 
-    fun start() {
-        println("aaaeweweww")
+    private fun start() {
         if (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                        Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             println("aaa")
 
 
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                            Manifest.permission.RECORD_AUDIO) || ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_COARSE_LOCATION) || ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION) ) {
+                            Manifest.permission.RECORD_AUDIO) || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION) || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
 
 
                 // Show an explanation to the user *asynchronously* -- don't block
@@ -192,7 +185,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
                 // No explanation needed, we can request the permission.
 
                 ActivityCompat.requestPermissions(this,
-                        arrayOf(Manifest.permission.RECORD_AUDIO,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION),
+                        arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
                         MY_PERMISSIONS_REQUEST_RECORD_AUDIO)
 
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
@@ -223,14 +216,8 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
         }
     }
 
-
-
-    // Old api
-
-
-
     override fun onResult(result: String) {
-        Log.d("test2",result)
+        Log.d("test2", result)
         if (this.mClient != null) {
             this.mClient.cancel()
             mProcessing = false
@@ -292,29 +279,31 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
                 saveData(musics, result)
             } else {
                 tres = result
+                mResult?.text = tres
 
             }
         } catch (e: JSONException) {
             tres = result
-
+            mResult?.text = "Error occurred"
             e.printStackTrace()
         }
 
 
     }
-    private fun saveData(musics:JSONArray, tres:String){
 
-        val locationObservable:Observable<Location?> = Observable.create {
+    private fun saveData(musics: JSONArray, tres: String)  {
+
+        val locationObservable: Observable<Location?> = Observable.create {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
 
                 mFusedLocationClient!!.lastLocation
                         .addOnSuccessListener(this, { location ->
                             // Got last known location. In some rare situations this can be null.
-                                // Logic to handle location object
-                                it.onNext(location)
-                                it.onComplete()
+                            // Logic to handle location object
+                            it.onNext(location)
+                            it.onComplete()
 
                         })
             } else {
@@ -324,31 +313,46 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
             val j = JSONObject(tres)
             val metadata = j.getJSONObject("metadata")
             val music = metadata.getJSONArray("music")
-            val external:JSONObject? = music.getJSONObject(0)
-            val youtube:JSONObject? = external?.getJSONObject("external_metadata")
-            val youtubeId:JSONObject? = youtube?.getJSONObject("youtube")
-            val video:String? = youtubeId?.getString("vid")
+            val external: JSONObject? = music.getJSONObject(0)
+            var video = ""
+            try {
+                val youtube: JSONObject? = external?.getJSONObject("external_metadata")
+                val youtubeId: JSONObject? = youtube?.getJSONObject("youtube")
+                val youtString: String? = youtubeId?.getString("vid")
+                video = youtString ?: ""
 
-            val album:JSONObject? = external?.getJSONObject("album")
-            val alName:String? = album?.getString("name")
+            }
+            catch (e:JSONException){
 
-            Log.d("test2",video.toString())
+            }
+
+
+            val album: JSONObject? = external?.getJSONObject("album")
+            val alName: String? = album?.getString("name")
+
+            Log.d("test2", video)
 
             val locationFine = mlocationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             //Save song to use
             val tt = musics.get(0) as JSONObject
-            val title:String = tt.getString("title")
+            val title: String = tt.getString("title")
             val artistt = tt.getJSONArray("artists")
             val art = artistt.get(0) as JSONObject
-            val artist:String = art.getString("name")
-            val user:User? = userPresenter.userDao.findUserByEmail(auth.currentUser?.email!!)
+            val artist: String = art.getString("name")
 
-            if (locationFine != null){
-                presenter.addNewSong(Listened(title+"",artist+"","bob",alName ?: "",user?.id!!, locationFine?.latitude ?: 0.0,locationFine?.longitude  ?: 0.0,video))
-                Log.d("test2","fine"+ locationFine.latitude + " " + location.longitude)
-            }
-            else{
-                presenter.addNewSong(Listened(title+"",artist+"","bob","-",user?.id!!, location?.latitude ?: 0.0,location?.longitude  ?: 0.0, video))
+            val genres:JSONArray? = external?.getJSONArray("genres")
+            val genreObj: JSONObject? = genres?.getJSONObject(0)
+            val genre:String? = genreObj?.getString("name")
+            val user: User? = userPresenter.userDao.findUserByEmail(auth.currentUser?.email!!)
+
+            if (locationFine != null) {
+                presenter.addNewSong(Listened(title + "", artist + "", genre ?:"-", alName
+                        ?: "", user?.id!!, locationFine?.latitude ?: 0.0, locationFine?.longitude
+                        ?: 0.0, video))
+                Log.d("test2", "fine" + locationFine.latitude + " " + location.longitude)
+            } else {
+                presenter.addNewSong(Listened(title + "", artist + "", genre ?: "-", "-", user?.id!!, location?.latitude
+                        ?: 0.0, location?.longitude ?: 0.0, video))
             }
 
 
@@ -357,9 +361,8 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
         }
 
 
-
-
     }
+
     override fun onVolumeChanged(volume: Double) {
         val time = (System.currentTimeMillis() - startTime) / 1000
         mVolume!!.text = resources.getString(R.string.volume) + volume + "\n\nTime：" + time + " s"
@@ -372,12 +375,12 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
         when (requestCode) {
             MY_PERMISSIONS_REQUEST_RECORD_AUDIO -> {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED   && grantResults[2] == PackageManager.PERMISSION_GRANTED ) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
 
-                   /* val locationListener: LocationListener? = null
+                    /* val locationListener: LocationListener? = null
 
-                    mlocationManager?.requestLocationUpdates(
-                            LocationManager.GPS_PROVIDER, 5000L, 10.0f, locationListener!!)*/
+                     mlocationManager?.requestLocationUpdates(
+                             LocationManager.GPS_PROVIDER, 5000L, 10.0f, locationListener!!)*/
 
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
@@ -424,5 +427,10 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
 
     }
 
+    override fun showListened(listenedList: List<Listened>) {}
+
+    override fun listenedAddedAt(position: Int) {}
+
+    override fun scrollTo(position: Int) {}
 
 }

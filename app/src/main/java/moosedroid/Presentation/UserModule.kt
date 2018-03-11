@@ -30,11 +30,13 @@ abstract class UserModule2 {
     @ActivityKey(SignupFireActivity::class)
     internal abstract fun bindsToDoActivityInjectorFactory(builder: UserSubComponent2.Builder): AndroidInjector.Factory<out Activity>
 }
-@Module(subcomponents = arrayOf(UserSubComponent3::class))
+@Module(subcomponents = arrayOf(UserSubComponent3::class, ListenedSubComponent6::class))
 abstract class UserModule3 {
 
     @Binds
     @IntoMap
     @ActivityKey(MenuBaseActivity::class)
     internal abstract fun bindsToDoActivityInjectorFactory(builder: UserSubComponent3.Builder): AndroidInjector.Factory<out Activity>
+    internal abstract fun bindsToDoActivityInjectorFactory2(builder: ListenedSubComponent6.Builder): AndroidInjector.Factory<out Activity>
+
 }

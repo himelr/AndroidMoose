@@ -29,7 +29,7 @@ class WebService(val name:String) : IntentService(name) {
 
     private fun publishResults(json: String?) {
         val intent = Intent(NOTIFICATION)
-        intent.putExtra("json", json!!)
+        intent.putExtra("json", json ?: "")
         notifier()
         sendBroadcast(intent)
     }

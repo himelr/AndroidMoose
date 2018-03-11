@@ -25,4 +25,7 @@
         android:title="@string/action_map"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/populate"
+        android:title="Auto populate"
+        app:showAsAction="never"/>
 </menu>

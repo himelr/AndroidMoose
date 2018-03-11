@@ -29,7 +29,7 @@ class UserListenedActivity : MenuBaseActivity(), ListenedPresentation {
     override fun showListened(listenedList: List<Listened>) {
             Log.d("test2", "set adapter")
         //Log.d("test2", listenedList[0].name)
-           listenedListRC.adapter = ListenedAdapter(listenedList,this)
+           list2.adapter = ListenedAdapter(listenedList,this)
 
 
     }
@@ -52,13 +52,10 @@ class UserListenedActivity : MenuBaseActivity(), ListenedPresentation {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
-        recyclerView = findViewById(R.id.listenedListRC)
+        recyclerView = findViewById(R.id.list2)
         recyclerView?.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         recyclerView?.adapter = ListenedAdapter(emptyList(),this)
-        presenter2.onCreate(this,1)
-        var song:Listened = Listened("Owo","d","monki","chicken", 1L,0.0,0.0,"")
-        //presenter2.addNewSong(song)
+        presenter2.onCreate(this,getLoggedId()!!)
 
-        //recyclerView?.adapter = ListenedAdapter()
     }
 }

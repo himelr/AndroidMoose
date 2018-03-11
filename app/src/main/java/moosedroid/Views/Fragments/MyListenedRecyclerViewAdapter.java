@@ -61,12 +61,12 @@ public class MyListenedRecyclerViewAdapter extends RecyclerView.Adapter<MyListen
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public Listened mItem;
+        final View mView;
+        final TextView mIdView;
+        final TextView mContentView;
+        Listened mItem;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.id);

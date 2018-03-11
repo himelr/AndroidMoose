@@ -9,6 +9,14 @@ import moosedroid.Views.Fragments.ListenedFragment
  * Created by HimelR on 24-Feb-18.
  */
 @Subcomponent
+interface ListenedSubComponent6 : AndroidInjector<MenuBaseActivity> {
+
+    @Subcomponent.Builder
+    abstract class Builder : AndroidInjector.Builder<MenuBaseActivity>()
+
+}
+
+@Subcomponent
 interface ListenedSubComponent : AndroidInjector<Main2Activity> {
 
     @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<Main2Activity>()
@@ -34,9 +42,4 @@ interface ListenedSubComponent5 : AndroidInjector<WebBoardActivity> {
 
     @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<WebBoardActivity>()
 }
-/*
-@Subcomponent
-interface ListenedSubComponent6 : AndroidInjector<MenuBaseActivity> {
 
-    @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<MenuBaseActivity>()
-}*/
