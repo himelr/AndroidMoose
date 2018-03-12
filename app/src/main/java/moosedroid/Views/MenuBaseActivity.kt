@@ -2,6 +2,7 @@ package moosedroid.Views
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.BaseTransientBottomBar
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -19,14 +20,18 @@ import moosedroid.Presentation.TestUser
 import moosedroid.Presentation.UserPresenter
 import moosedroid.Room.Listened
 import moosedroid.Room.User
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 /**
  * Created by HimelR on 04-Mar-18.
  */
-abstract class MenuBaseActivity : AppCompatActivity(),ListenedPresentation{
+abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
+
     protected val auth = FirebaseAuth.getInstance()!!
     protected abstract fun getLayoutResourceId(): Int
+    protected abstract fun setBottomBar()
+    protected lateinit var bottomBar: BottomNavigationView
 
     @Inject
     protected lateinit var userPresenter: UserPresenter
@@ -35,26 +40,11 @@ abstract class MenuBaseActivity : AppCompatActivity(),ListenedPresentation{
     protected lateinit var listenedPresenter: ListenedPresenter
 
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(getLayoutResourceId())
-        val bottomNavigationView: BottomNavigationView = findViewById(R.id.navigation)
-
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-
-            when (item.itemId) {
-                R.id.action_item1 -> startActivity(Intent(this,Main2Activity::class.java))
-                R.id.action_item2 -> startActivity(Intent(this,ListenedSongActivity::class.java))
-                R.id.action_item3 -> startActivity(Intent(this,WebBoardActivity::class.java))
-            }
-
-            true
-        }
-
+        setBottomBar()
         val myToolbar = findViewById<Toolbar>(R.id.my_toolbar2)
         setSupportActionBar(myToolbar)
         //val ab = supportActionBar
@@ -72,6 +62,7 @@ abstract class MenuBaseActivity : AppCompatActivity(),ListenedPresentation{
         }
         auth.addAuthStateListener(authListener)
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.actionbar, menu)
@@ -111,11 +102,7 @@ abstract class MenuBaseActivity : AppCompatActivity(),ListenedPresentation{
                 return true
 
             }
-            R.id.listenedMap -> {
-                startActivity(Intent(this, ListenedSongActivity::class.java))
-                return true
 
-            }
             R.id.populate -> {
                 val alertDialog = AlertDialog.Builder(this).create()
                 alertDialog.setTitle("Populate")
@@ -125,14 +112,13 @@ abstract class MenuBaseActivity : AppCompatActivity(),ListenedPresentation{
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "YES"
                 ) { dialog, which ->
                     val id = getLoggedId()!!
-                    listenedPresenter.onCreate(this,id)
-                    listenedPresenter.addNewSong(Listened("Battery","Metallica","Metal","Master Of Puppets",id,40.710008, -74.005322,"md3B3I7Nmvw"))
-                    listenedPresenter.addNewSong(Listened("Comfortably Numb","Pink Floyd","Rock","The Wall",id,60.451813, 22.266630,"_FrOQC-zEog"))
+                    listenedPresenter.onCreate(this, id)
+                    listenedPresenter.addNewSong(Listened("Battery", "Metallica", "Metal", "Master Of Puppets", id, 40.710008, -74.005322, "md3B3I7Nmvw"))
+                    listenedPresenter.addNewSong(Listened("Comfortably Numb", "Pink Floyd", "Rock", "The Wall", id, 60.451813, 22.266630, "_FrOQC-zEog"))
 
                 }
                 alertDialog.show()
                 return true
-
 
             }
 
@@ -141,7 +127,21 @@ abstract class MenuBaseActivity : AppCompatActivity(),ListenedPresentation{
                 return super.onOptionsItemSelected(item)
         }
     }
-    fun getLoggedId() : Long?{
+
+    fun setItems() {
+        bottomBar.setOnNavigationItemSelectedListener { item ->
+
+            when (item.itemId) {
+                R.id.action_item1 -> startActivity(Intent(this, Main2Activity::class.java))
+                R.id.action_item2 -> startActivity(Intent(this, ListenedSongActivity::class.java))
+                R.id.action_item3 -> startActivity(Intent(this, WebBoardActivity::class.java))
+            }
+
+            true
+        }
+    }
+
+    fun getLoggedId(): Long? {
         val user: User? = userPresenter.userDao.findUserByEmail(auth.currentUser?.email!!)
         return user?.id
     }

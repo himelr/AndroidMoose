@@ -1,29 +1,24 @@
 package moosedroid.Views
 
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import com.acrcloud.rec.mooseb.R
-import com.google.android.youtube.player.YouTubeBaseActivity
-import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayerView
-import moosedroid.Firebase.Config
-import android.widget.Toast
-import com.google.android.youtube.player.YouTubeInitializationResult
 import android.content.Intent
-import android.content.res.Configuration
-import android.support.v7.widget.Toolbar
+import android.os.Bundle
+import android.widget.Toast
+import com.acrcloud.rec.mooseb.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.youtube.player.YouTubeBaseActivity
+import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubePlayer
+import com.google.android.youtube.player.YouTubePlayerView
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_listened_detail.*
+import moosedroid.Firebase.Config
 import moosedroid.Presentation.ListenedPresentation
 import moosedroid.Presentation.ListenedPresenter
 import moosedroid.Room.Listened
-import moosedroid.Views.Fragments.ListenedFragment
 import javax.inject.Inject
 
 
@@ -34,6 +29,7 @@ class ListenedDetailActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
     private var youTubeView: YouTubePlayerView? = null
     private var listenedId: Long? = null
     private var listened: Listened? = null
+    private lateinit var mMap: GoogleMap
     @Inject
     lateinit var presenter: ListenedPresenter
 
@@ -42,7 +38,6 @@ class ListenedDetailActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listened_detail)
-
 
         val intent = intent
         val message = intent.getStringExtra("id")
@@ -54,17 +49,31 @@ class ListenedDetailActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
         youTubeView = findViewById(R.id.youtube_view)
         youTubeView?.initialize(Config().YOUTUBE_API_KEY, this)
 
+
         mapView3.onCreate(savedInstanceState)
         mapView3.getMapAsync(this)
 
+        share.setOnClickListener {
+            val sendIntent = Intent()
+            sendIntent.action = Intent.ACTION_SEND
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "I just listened to " + listened?.title + " by " + listened?.artist + " on MooseDroid")
+            sendIntent.type = "text/plain"
 
+
+            if (sendIntent.resolveActivity(packageManager) != null) {
+                startActivity(sendIntent)
+            }
+
+        }
     }
 
     override fun onMapReady(map: GoogleMap) {
+        mMap = map
         val loca = LatLng(listened?.latitude!!, listened?.longitude!!)
-        map.addMarker(MarkerOptions().position(loca).title("Song Found"))
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loca, 15.0f))
-        map.isBuildingsEnabled = true
+        mMap.addMarker(MarkerOptions().position(loca).title("Song Found"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loca, 15.0f))
+        mMap.isBuildingsEnabled = true
+
     }
 
 
@@ -115,12 +124,8 @@ class ListenedDetailActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
         updateData()
     }
 
-    override fun listenedAddedAt(position: Int) {
-        return
-    }
+    override fun listenedAddedAt(position: Int) {}
 
-    override fun scrollTo(position: Int) {
-        return
-    }
+    override fun scrollTo(position: Int) {}
 
 }

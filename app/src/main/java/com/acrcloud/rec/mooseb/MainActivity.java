@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements IACRCloudListener
         if (!file.exists()) {
             file.mkdirs();
         }
+/*
 
         mVolume = (TextView) findViewById(R.id.volume);
         mResult = (TextView) findViewById(R.id.result);
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements IACRCloudListener
                         cancel();
                     }
                 });
+*/
 
 
         this.mConfig = new ACRCloudConfig();

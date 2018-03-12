@@ -16,6 +16,10 @@ import moosedroid.Views.MenuBaseActivity
 import javax.inject.Inject
 
 class TestUser : MenuBaseActivity(), UserPresentation {
+    override fun setBottomBar() {
+        bottomBar = findViewById(R.id.navigation)
+        setItems()
+    }
 
 
     override fun getLayoutResourceId(): Int {

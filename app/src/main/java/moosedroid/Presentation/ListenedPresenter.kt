@@ -1,5 +1,6 @@
 package moosedroid.Presentation
 
+import android.os.SystemClock
 import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -8,6 +9,8 @@ import moosedroid.Room.Listened
 import moosedroid.Room.ListenedDao
 import javax.inject.Inject
 import io.reactivex.Observable
+import java.util.concurrent.TimeUnit
+
 /**
  * Created by HimelR on 24-Feb-18.
  */
@@ -15,11 +18,12 @@ class ListenedPresenter @Inject constructor(val listenedDao: ListenedDao) {
     val compositeDisposable = CompositeDisposable()
     var listenedList = ArrayList<Listened>()
     var presentation: ListenedPresentation? = null
+    var startIntent:StartIntent? = null
 
-
-    fun onCreate(listenedPresentation: ListenedPresentation, id : Long){
+    fun onCreate(listenedPresentation: ListenedPresentation, id : Long, startIntent: StartIntent? = null){
 
         presentation = listenedPresentation
+        this.startIntent = startIntent
         loadSongs(id)
     }
 
@@ -27,6 +31,7 @@ class ListenedPresenter @Inject constructor(val listenedDao: ListenedDao) {
         listenedDao.insertSong(listened)
         Log.d("test2","song added")
     }
+
 
     fun getListened(id:Long) : Listened? {
 
@@ -38,6 +43,16 @@ class ListenedPresenter @Inject constructor(val listenedDao: ListenedDao) {
         return null
     }
 
+    fun getLatest() {
+
+        compositeDisposable.add(listenedDao.findNewest()
+
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    startIntent?.startIntent(id = it.id)
+                }))
+    }
 
     fun loadSongs(id: Long){
         compositeDisposable.add(listenedDao.findSongsById(id)
@@ -61,5 +76,8 @@ class ListenedPresenter @Inject constructor(val listenedDao: ListenedDao) {
        // Log.d("test2", "rd")
 
 
+    }
+    interface StartIntent{
+        fun startIntent(id: Long)
     }
 }

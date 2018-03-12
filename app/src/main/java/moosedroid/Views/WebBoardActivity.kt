@@ -20,6 +20,10 @@ import org.json.JSONObject
 import java.util.ArrayList
 
 class WebBoardActivity : MenuBaseActivity() {
+    override fun setBottomBar() {
+        bottomBar = findViewById(R.id.include)
+        setItems()
+    }
 
     private var songList: List<WebSong>? = null
 

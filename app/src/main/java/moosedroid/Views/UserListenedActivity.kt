@@ -18,6 +18,10 @@ import moosedroid.Room.User
 import javax.inject.Inject
 
 class UserListenedActivity : MenuBaseActivity(), ListenedPresentation {
+    override fun setBottomBar() {
+        bottomBar = findViewById(R.id.include3)
+        setItems()
+    }
 
     override fun getLayoutResourceId(): Int {
         return R.layout.activity_user_listened

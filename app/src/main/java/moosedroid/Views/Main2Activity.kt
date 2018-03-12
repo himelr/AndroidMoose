@@ -12,8 +12,10 @@ import com.google.firebase.auth.FirebaseAuth
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.ActivityOptions
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -44,6 +46,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_listened_detail.*
 import kotlinx.android.synthetic.main.activity_main.*
 import moosedroid.Firebase.LoginFireActivity
 import moosedroid.Presentation.ListenedPresenter
@@ -51,10 +54,17 @@ import moosedroid.Presentation.TestUser
 import moosedroid.Room.Listened
 import moosedroid.Room.User
 import org.json.JSONArray
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 
-class Main2Activity : MenuBaseActivity(), IACRCloudListener {
+class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.StartIntent {
+
+    override fun setBottomBar() {
+            bottomBar = findViewById(R.id.include2)
+            setItems()
+    }
+
 
     private val TEST = "test2"
     private val mClient: ACRCloudClient = ACRCloudClient()
@@ -77,6 +87,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
     private var compositeDisposable = CompositeDisposable()
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var mlocationManager: LocationManager? = null
+    private var switch = true
 
     @Inject
     lateinit var presenter: ListenedPresenter
@@ -89,7 +100,9 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        //setContentView(activity_main)
+
+        presenter.onCreate(this, getLoggedId()!!, this)
+
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         mlocationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
@@ -120,7 +133,18 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
 
         findViewById<View>(R.id.cancel).setOnClickListener { cancel() }
 
-
+        imageButton.setOnClickListener {
+            if (switch){
+                switch = false
+                it.setBackgroundResource(R.drawable.ic_mic_red_64dp)
+                start()
+            }
+            else{
+                switch = true
+                it.setBackgroundResource(R.drawable.ic_mic_none_black_64dp)
+                stop()
+            }
+        }
 
 
         this.mConfig.acrcloudListener = this
@@ -217,6 +241,8 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
     }
 
     override fun onResult(result: String) {
+        switch = true
+        imageButton.setBackgroundResource(R.drawable.ic_mic_none_black_64dp)
         Log.d("test2", result)
         if (this.mClient != null) {
             this.mClient.cancel()
@@ -253,6 +279,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
                         val art = artistt.get(0) as JSONObject
                         val artist = art.getString("name")
                         tres = tres + (i + 1) + ".  Title: " + title + "    Artist: " + artist + "\n"
+                        volume.text = title + " by " + artist
                     }
 
                 }
@@ -280,6 +307,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
             } else {
                 tres = result
                 mResult?.text = tres
+                volume.text = "Song not found!"
 
             }
         } catch (e: JSONException) {
@@ -291,7 +319,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
 
     }
 
-    private fun saveData(musics: JSONArray, tres: String)  {
+    private fun saveData(musics: JSONArray, tres: String) {
 
         val locationObservable: Observable<Location?> = Observable.create {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -321,9 +349,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
                 val youtString: String? = youtubeId?.getString("vid")
                 video = youtString ?: ""
 
-            }
-            catch (e:JSONException){
-
+            } catch (e: JSONException) {
             }
 
 
@@ -339,22 +365,28 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
             val artistt = tt.getJSONArray("artists")
             val art = artistt.get(0) as JSONObject
             val artist: String = art.getString("name")
-
-            val genres:JSONArray? = external?.getJSONArray("genres")
-            val genreObj: JSONObject? = genres?.getJSONObject(0)
-            val genre:String? = genreObj?.getString("name")
-            val user: User? = userPresenter.userDao.findUserByEmail(auth.currentUser?.email!!)
-
-            if (locationFine != null) {
-                presenter.addNewSong(Listened(title + "", artist + "", genre ?:"-", alName
-                        ?: "", user?.id!!, locationFine?.latitude ?: 0.0, locationFine?.longitude
-                        ?: 0.0, video))
-                Log.d("test2", "fine" + locationFine.latitude + " " + location.longitude)
-            } else {
-                presenter.addNewSong(Listened(title + "", artist + "", genre ?: "-", "-", user?.id!!, location?.latitude
-                        ?: 0.0, location?.longitude ?: 0.0, video))
+            var genre = ""
+            try {
+                val genres: JSONArray? = external?.getJSONArray("genres")
+                val genreObj: JSONObject? = genres?.getJSONObject(0)
+                val genreT: String? = genreObj?.getString("name")
+                genre = genreT ?: ""
+            } catch (e: JSONException) {
             }
 
+            if (locationFine != null) {
+                presenter.addNewSong(Listened(title + "", artist + "", genre ?: "-", alName
+                        ?: "", getLoggedId()!!, locationFine?.latitude
+                        ?: 0.0, locationFine?.longitude
+                        ?: 0.0, video))
+                presenter.getLatest()
+
+            } else {
+                presenter.addNewSong(Listened(title + "", artist + "", genre
+                        ?: "-", "-", getLoggedId()!!, location?.latitude
+                        ?: 0.0, location?.longitude ?: 0.0, video))
+                presenter.getLatest()
+            }
 
             testBox.text = location?.longitude.toString()
             mResult?.text = tres
@@ -425,6 +457,15 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener {
             startTime = System.currentTimeMillis()
         }
 
+    }
+
+    override fun startIntent(id: Long) {
+
+        val intent = Intent(applicationContext, ListenedDetailActivity::class.java)
+        intent.putExtra("id", id.toString() + "")
+        intent.putExtra("userId", getLoggedId().toString() + "")
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK;
+        ContextCompat.startActivity(applicationContext, intent,null)
     }
 
     override fun showListened(listenedList: List<Listened>) {}
