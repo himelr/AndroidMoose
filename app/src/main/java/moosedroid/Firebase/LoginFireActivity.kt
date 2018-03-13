@@ -10,8 +10,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.acrcloud.rec.mooseb.ResetPasswordActivity
-import com.acrcloud.rec.mooseb.SignupActivity
 
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult

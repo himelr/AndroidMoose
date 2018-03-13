@@ -12,7 +12,7 @@ import javax.inject.Inject
 class UserPresenter @Inject constructor(val userDao: UserDao) {
 
     var users = ArrayList<User>()
-    val compositeDisposable = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
 
     var presentation: UserPresentation? = null
@@ -28,7 +28,7 @@ class UserPresenter @Inject constructor(val userDao: UserDao) {
         presentation = null
     }
 
-    fun loadusers() {
+    private fun loadusers() {
         compositeDisposable.add(userDao.getAllUsers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -40,7 +40,6 @@ class UserPresenter @Inject constructor(val userDao: UserDao) {
                         presentation?.scrollTo(it)
                     }
                 }))
-
         presentation?.showUsers(users)
     }
 

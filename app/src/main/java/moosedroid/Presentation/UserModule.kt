@@ -1,7 +1,6 @@
 package moosedroid.Presentation
 
 import android.app.Activity
-import com.acrcloud.rec.mooseb.MainActivity
 import dagger.Binds
 import dagger.Module
 import dagger.android.ActivityKey
