@@ -32,6 +32,7 @@ abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
     protected abstract fun getLayoutResourceId(): Int
     protected abstract fun setBottomBar()
     protected lateinit var bottomBar: BottomNavigationView
+    protected var upVar = false
 
     @Inject
     protected lateinit var userPresenter: UserPresenter
@@ -47,7 +48,8 @@ abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
         setBottomBar()
         val myToolbar = findViewById<Toolbar>(R.id.my_toolbar2)
         setSupportActionBar(myToolbar)
-        //val ab = supportActionBar
+        supportActionBar?.setDisplayHomeAsUpEnabled(upVar)
+
 
         val authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
@@ -119,9 +121,11 @@ abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
                 }
                 alertDialog.show()
                 return true
-
             }
-
+            android.R.id.home ->{
+                super.finish()
+                return true
+            }
             else ->
 
                 return super.onOptionsItemSelected(item)

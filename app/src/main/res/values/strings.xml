@@ -9,18 +9,18 @@
     <!--<string name="cancel">Cancel</string>-->
     <!--<string name="stop">Stop and recognize</string>-->
     <string name="recording">Recording</string>
-    <string name="volume">aVolume: </string>
+    <string name="volume">Volume: </string>
     <string name="result">Result: </string>
-    <string name="start">Start LUL!</string>
+    <string name="start">Start!</string>
     <string name="stop">Stop and recognize</string>
     <string name="cancel">Cancel</string>
 
     <string name="action_favorite">Logout</string>
     <string name="action_map">Map</string>
     <string name="action_users">Users</string>
-    <string name="item_1">1</string>
-    <string name="item_2">2</string>
-    <string name="item_3">3</string>
+    <string name="item_1">Rec</string>
+    <string name="item_2">Map</string>
+    <string name="item_3">Web</string>
     <string name="share">Share</string>
 
     <!-- Strings related to login -->

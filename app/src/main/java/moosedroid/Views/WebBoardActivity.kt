@@ -20,6 +20,7 @@ import org.json.JSONObject
 import java.util.ArrayList
 
 class WebBoardActivity : MenuBaseActivity() {
+
     override fun setBottomBar() {
         bottomBar = findViewById(R.id.include)
         setItems()
@@ -49,6 +50,7 @@ class WebBoardActivity : MenuBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
+        upVar = true
         super.onCreate(savedInstanceState)
         val intent = Intent(this, WebService::class.java)
         startService(intent)

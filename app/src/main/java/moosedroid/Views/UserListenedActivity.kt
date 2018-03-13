@@ -54,6 +54,7 @@ class UserListenedActivity : MenuBaseActivity(), ListenedPresentation {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
+        upVar = true
         super.onCreate(savedInstanceState)
 
         recyclerView = findViewById(R.id.list2)

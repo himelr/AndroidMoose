@@ -53,7 +53,8 @@
         <activity
             android:name="moosedroid.Presentation.TestUser"
             android:launchMode="singleTask" />
-        <activity android:name="moosedroid.Views.UserListenedActivity" />
+        <activity android:name="moosedroid.Views.UserListenedActivity"
+            android:launchMode="singleTask"/>
         <activity android:name="moosedroid.Views.ListenedSongActivity" />
         <activity android:name="moosedroid.Views.ListenedActivity" />
 
@@ -71,7 +72,9 @@
                 android:launchMode="singleTask" />
         </activity>
         <activity android:name="moosedroid.Views.WebBoardActivity"
-            android:launchMode="singleTask" ></activity>
+            android:launchMode="singleTask">
+
+        </activity>
         <service android:name="moosedroid.Service.WebService" />
     </application>
 

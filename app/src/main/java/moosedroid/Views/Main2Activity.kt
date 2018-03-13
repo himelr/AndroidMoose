@@ -60,12 +60,6 @@ import javax.inject.Inject
 
 class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.StartIntent {
 
-    override fun setBottomBar() {
-            bottomBar = findViewById(R.id.include2)
-            setItems()
-    }
-
-
     private val TEST = "test2"
     private val mClient: ACRCloudClient = ACRCloudClient()
     private val mConfig: ACRCloudConfig = ACRCloudConfig()
@@ -118,28 +112,13 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
         mResult = findViewById<View>(R.id.result) as TextView
         tv_time = findViewById<View>(R.id.time) as TextView
 
-        val startBtn = findViewById<View>(R.id.start) as Button
-        startBtn.text = resources.getString(R.string.start)
-
-        val stopBtn = findViewById<View>(R.id.stop) as Button
-        stopBtn.text = resources.getString(R.string.stop)
-
-        findViewById<View>(R.id.stop).setOnClickListener { stop() }
-
-        val cancelBtn = findViewById<View>(R.id.cancel) as Button
-        cancelBtn.text = resources.getString(R.string.cancel)
-
-        findViewById<View>(R.id.start).setOnClickListener { start() }
-
-        findViewById<View>(R.id.cancel).setOnClickListener { cancel() }
 
         imageButton.setOnClickListener {
-            if (switch){
+            if (switch) {
                 switch = false
                 it.setBackgroundResource(R.drawable.ic_mic_red_64dp)
                 start()
-            }
-            else{
+            } else {
                 switch = true
                 it.setBackgroundResource(R.drawable.ic_mic_none_black_64dp)
                 stop()
@@ -281,7 +260,6 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
                         tres = tres + (i + 1) + ".  Title: " + title + "    Artist: " + artist + "\n"
                         volume.text = title + " by " + artist
                     }
-
                 }
                 if (metadata.has("streams")) {
                     val musics = metadata.getJSONArray("streams")
@@ -306,17 +284,14 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
                 saveData(musics, result)
             } else {
                 tres = result
-                mResult?.text = tres
+                mResult?.text = j.toString(3)
                 volume.text = "Song not found!"
-
             }
         } catch (e: JSONException) {
             tres = result
             mResult?.text = "Error occurred"
             e.printStackTrace()
         }
-
-
     }
 
     private fun saveData(musics: JSONArray, tres: String) {
@@ -325,14 +300,12 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
-
                 mFusedLocationClient!!.lastLocation
                         .addOnSuccessListener(this, { location ->
                             // Got last known location. In some rare situations this can be null.
                             // Logic to handle location object
                             it.onNext(location)
                             it.onComplete()
-
                         })
             } else {
             }
@@ -352,11 +325,8 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
             } catch (e: JSONException) {
             }
 
-
             val album: JSONObject? = external?.getJSONObject("album")
             val alName: String? = album?.getString("name")
-
-            Log.d("test2", video)
 
             val locationFine = mlocationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             //Save song to use
@@ -375,32 +345,25 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
             }
 
             if (locationFine != null) {
-                presenter.addNewSong(Listened(title + "", artist + "", genre ?: "-", alName
-                        ?: "", getLoggedId()!!, locationFine?.latitude
-                        ?: 0.0, locationFine?.longitude
-                        ?: 0.0, video))
+                presenter.addNewSong(Listened(title + "", artist + "", genre, alName
+                        ?: "", getLoggedId()!!, locationFine.latitude, locationFine.longitude, video))
                 presenter.getLatest()
 
             } else {
-                presenter.addNewSong(Listened(title + "", artist + "", genre
-                        ?: "-", "-", getLoggedId()!!, location?.latitude
-                        ?: 0.0, location?.longitude ?: 0.0, video))
+                presenter.addNewSong(Listened(title + "", artist + "", genre, "-", getLoggedId()!!, location.latitude, location.longitude, video))
                 presenter.getLatest()
             }
 
-            testBox.text = location?.longitude.toString()
-            mResult?.text = tres
+            mResult?.text = j.toString(3)
         }
-
 
     }
 
     override fun onVolumeChanged(volume: Double) {
         val time = (System.currentTimeMillis() - startTime) / 1000
-        mVolume!!.text = resources.getString(R.string.volume) + volume + "\n\nTime：" + time + " s"
+        mVolume!!.text = "Time：" + time + " s\n" + "\n" + resources.getString(R.string.volume) + " " + volume
 
     }
-
 
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>, grantResults: IntArray) {
@@ -409,23 +372,12 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
 
-                    /* val locationListener: LocationListener? = null
-
-                     mlocationManager?.requestLocationUpdates(
-                             LocationManager.GPS_PROVIDER, 5000L, 10.0f, locationListener!!)*/
-
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-
                 } else {
 
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                 }
                 return
             }
-        }// other 'case' lines to check for other
-        // permissions this app might request.
+        }
     }
 
     override fun onDestroy() {
@@ -465,7 +417,12 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
         intent.putExtra("id", id.toString() + "")
         intent.putExtra("userId", getLoggedId().toString() + "")
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK;
-        ContextCompat.startActivity(applicationContext, intent,null)
+        ContextCompat.startActivity(applicationContext, intent, null)
+    }
+
+    override fun setBottomBar() {
+        bottomBar = findViewById(R.id.include2)
+        setItems()
     }
 
     override fun showListened(listenedList: List<Listened>) {}
