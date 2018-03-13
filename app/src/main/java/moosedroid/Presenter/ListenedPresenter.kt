@@ -11,6 +11,7 @@ import javax.inject.Inject
 /**
  * Created by HimelR on 24-Feb-18.
  */
+//Handles the business logic and interaction with data base. Rx Java
 class ListenedPresenter @Inject constructor(private val listenedDao: ListenedDao) {
     private val compositeDisposable = CompositeDisposable()
     var listenedList = ArrayList<Listened>()
@@ -23,12 +24,12 @@ class ListenedPresenter @Inject constructor(private val listenedDao: ListenedDao
         this.startIntent = startIntent
         loadSongs(id)
     }
-
+    //Adds a song
     fun addNewSong(listened: Listened) {
         listenedDao.insertSong(listened)
         Log.d("test2", "song added")
     }
-
+    //Returns listened
     fun getListened(id: Long): Listened? {
 
         for (listened in listenedList) {
@@ -38,13 +39,13 @@ class ListenedPresenter @Inject constructor(private val listenedDao: ListenedDao
         }
         return null
     }
-
+    //Deletes all
     fun deleteUsersListened(id: Long) {
         listenedDao.deleteById(id)
         listenedList.clear()
         presentation?.showListened(emptyList())
     }
-
+    //Gets latest added listened. Start detail activity.
     fun getLatest() {
 
         compositeDisposable.add(listenedDao.findNewest()
@@ -55,17 +56,15 @@ class ListenedPresenter @Inject constructor(private val listenedDao: ListenedDao
                     startIntent?.startIntent(id = it.id)
                 }))
     }
-
+    //loads all the songs. Calls presentation
     fun loadSongs(id: Long) {
         compositeDisposable.add(listenedDao.findSongsById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    // Log.d("test2", it[0].name)
                     listenedList.clear()
                     listenedList.addAll(it)
                     for (i in listenedList) {
-                        // Log.d("test2", i.genre)
                     }
                     (listenedList.size - 1).takeIf { it >= 0 }?.let {
 
@@ -82,7 +81,7 @@ class ListenedPresenter @Inject constructor(private val listenedDao: ListenedDao
         presentation = null
     }
 
-
+    //start the intent
     interface StartIntent {
         fun startIntent(id: Long)
     }

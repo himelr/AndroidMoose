@@ -15,7 +15,7 @@ import moosedroid.Views.Fragments.ListenedFragment.OnListFragmentInteractionList
 import java.util.List;
 
 
-
+//User listened fragment adapter
 public class MyListenedRecyclerViewAdapter extends RecyclerView.Adapter<MyListenedRecyclerViewAdapter.ViewHolder> {
 
     private final List<Listened> mValues;

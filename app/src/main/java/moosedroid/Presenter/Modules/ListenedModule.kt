@@ -12,6 +12,7 @@ import moosedroid.Views.*
 /**
  * Created by HimelR on 24-Feb-18.
  */
+//Provide dependencies to activities
 @Module(subcomponents = arrayOf(ListenedSubComponent::class))
 abstract class ListenedModule {
 

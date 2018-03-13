@@ -8,9 +8,10 @@ import moosedroid.Models.Listened
 /**
  * Created by HimelR on 24-Feb-18.
  */
+//Data object model
 @Dao
 interface ListenedDao {
-
+    //Flowable list (Rx Java)
     @Query("select * from Listened where userId = :id")
     fun findSongsById(id: Long): Flowable<List<Listened>>
 
@@ -22,7 +23,6 @@ interface ListenedDao {
 
     @Insert()
     fun insertSong(listened: Listened)
-
 
     @Delete
     fun deleteSong(listened: Listened)

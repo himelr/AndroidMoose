@@ -14,7 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
-
+//Reset Firebase user password
 class ResetPasswordFireActivity : AppCompatActivity() {
 
     private var inputEmail: EditText? = null

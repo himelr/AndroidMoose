@@ -10,6 +10,7 @@ import moosedroid.Views.MenuBaseActivity
 /**
  * Created by HimelR on 17-Feb-18.
  */
+//Subcomponents
 @Subcomponent interface UserSubComponent : AndroidInjector<UserActivity> {
 
     @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<UserActivity>()

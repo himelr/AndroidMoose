@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter
 /**
  * Created by HimelR on 21-Feb-18.
  */
-//foreignKeys = @ForeignKey(entity = User::class,parentColumns = "email",childColumns = "userId",onDelete = CASCADE)
+//Data class for Listened song
 @Entity(tableName = "Listened",foreignKeys = [(ForeignKey(entity = User::class, parentColumns = arrayOf("id"), childColumns = arrayOf("userId"), onDelete = CASCADE))])
 
 

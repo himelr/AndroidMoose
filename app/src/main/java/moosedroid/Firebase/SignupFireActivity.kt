@@ -18,7 +18,7 @@ import dagger.android.AndroidInjection
 import moosedroid.Presenter.UserPresenter
 import moosedroid.Views.Main2Activity
 import javax.inject.Inject
-
+//Creates user
 class SignupFireActivity : AppCompatActivity() {
 
     @Inject

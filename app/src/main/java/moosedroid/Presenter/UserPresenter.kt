@@ -9,6 +9,7 @@ import java.util.*
 import io.reactivex.Observable
 import javax.inject.Inject
 
+//Handles the business logic and interaction with data base
 class UserPresenter @Inject constructor(val userDao: UserDao) {
 
     var users = ArrayList<User>()
@@ -27,7 +28,7 @@ class UserPresenter @Inject constructor(val userDao: UserDao) {
         compositeDisposable.dispose()
         presentation = null
     }
-
+    //loads all the users. Calls presentation
     private fun loadusers() {
         compositeDisposable.add(userDao.getAllUsers()
                 .subscribeOn(Schedulers.io())

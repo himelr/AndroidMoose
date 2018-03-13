@@ -12,7 +12,7 @@ import moosedroid.Models.User
 import moosedroid.Adapters.UserAdapter
 import moosedroid.Views.MenuBaseActivity
 import javax.inject.Inject
-
+//Shows all local users.
 class UserActivity : MenuBaseActivity(), UserPresentation {
 
     @Inject

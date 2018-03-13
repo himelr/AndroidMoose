@@ -4,14 +4,11 @@ import android.util.Log;
 
 
 import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -20,7 +17,7 @@ import java.net.URL;
 /**
  * Created by HimelR on 06-Feb-18.
  */
-
+//Get JSON from URL
 public class JSONParser {
     private final String TAG = "test2";
 
@@ -28,7 +25,6 @@ public class JSONParser {
     public JSONParser() {
 
     }
-
 
     public String getJSONFromUrl2(String reqUrl) throws JSONException {
         String response = null;

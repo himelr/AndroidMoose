@@ -11,23 +11,22 @@ import moosedroid.Adapters.ListenedAdapter
 import moosedroid.Presenter.ListenedPresentation
 import moosedroid.Models.Listened
 
+//Shows all songs listened by user.
 class UserListenedActivity : MenuBaseActivity(), ListenedPresentation {
 
+    private var recyclerView: RecyclerView? = null
 
     override fun showListened(listenedList: List<Listened>) {
-           list2.adapter = ListenedAdapter(listenedList, this)
+        list2.adapter = ListenedAdapter(listenedList, this)
     }
 
     override fun listenedAddedAt(position: Int) {
-       recyclerView?.adapter?.notifyItemInserted(position)
+        recyclerView?.adapter?.notifyItemInserted(position)
     }
-
 
     override fun scrollTo(position: Int) {
         recyclerView?.smoothScrollToPosition(position)
-           }
-
-    var recyclerView:RecyclerView? = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -35,9 +34,9 @@ class UserListenedActivity : MenuBaseActivity(), ListenedPresentation {
         super.onCreate(savedInstanceState)
 
         recyclerView = findViewById(R.id.list2)
-        recyclerView?.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+        recyclerView?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView?.adapter = ListenedAdapter(emptyList(), this)
-        listenedPresenter.onCreate(this,getLoggedId()!!)
+        listenedPresenter.onCreate(this, getLoggedId()!!)
     }
 
     override fun setBottomBar() {
@@ -48,6 +47,7 @@ class UserListenedActivity : MenuBaseActivity(), ListenedPresentation {
     override fun getLayoutResourceId(): Int {
         return R.layout.activity_user_listened
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.actionbar_user_listened, menu)

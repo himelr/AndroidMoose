@@ -16,7 +16,7 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import moosedroid.Views.Main2Activity
 
-
+//Firebase login
 class LoginFireActivity : AppCompatActivity() {
 
     private var inputEmail: EditText? = null

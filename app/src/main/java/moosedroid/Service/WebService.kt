@@ -12,6 +12,7 @@ import org.json.JSONObject
 /**
  * Created by HimelR on 09-Mar-18.
  */
+//Intent service to load the data from web
 class WebService(val name:String) : IntentService(name) {
 
     val URL = "https://moosebeat.herokuapp.com/api/albums/get/all"
@@ -23,8 +24,6 @@ class WebService(val name:String) : IntentService(name) {
         val jParser = JSONParser()
         val json = jParser.getJSONFromUrl2(URL)
         publishResults(json)
-
-
     }
 
     private fun publishResults(json: String?) {

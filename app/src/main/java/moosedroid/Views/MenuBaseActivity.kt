@@ -24,14 +24,15 @@ import javax.inject.Inject
 /**
  * Created by HimelR on 04-Mar-18.
  */
+//Abstract base class for activities.
 abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
 
-    protected val auth = FirebaseAuth.getInstance()!!
+    private val auth = FirebaseAuth.getInstance()!!
     protected abstract fun getLayoutResourceId(): Int
     protected abstract fun setBottomBar()
     protected lateinit var bottomBar: BottomNavigationView
     protected var upVar = false
-
+    //Injected presenters.
     @Inject
     protected lateinit var userPresenter: UserPresenter
 
@@ -67,7 +68,7 @@ abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
         menuInflater.inflate(R.menu.actionbar, menu)
         return true
     }
-
+    //Handles actionbar clicks.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
@@ -135,7 +136,7 @@ abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
                 return super.onOptionsItemSelected(item)
         }
     }
-
+    //Set bottombar items.
     fun setItems() {
         bottomBar.setOnNavigationItemSelectedListener { item ->
 
@@ -147,7 +148,7 @@ abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
             true
         }
     }
-
+    //Logged user id.
     fun getLoggedId(): Long? {
         val user: User? = userPresenter.userDao.findUserByEmail(auth.currentUser?.email!!)
         return user?.id

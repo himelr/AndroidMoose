@@ -65,5 +65,7 @@
     <string name="press_mic_to_start">Press mic to start recognizing</string>
     <string name="auto_populate">Auto Populate</string>
     <string name="empty_listened">Delete All</string>
+    <string name="error">Error occurred</string>
+    <string name="not_found">Song not found!</string>
 
 </resources>

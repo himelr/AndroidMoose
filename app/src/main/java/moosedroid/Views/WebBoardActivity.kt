@@ -16,13 +16,8 @@ import moosedroid.Models.WebSong
 import org.json.JSONArray
 import org.json.JSONException
 import java.util.ArrayList
-
+//List of songs downloaded from web
 class WebBoardActivity : MenuBaseActivity() {
-
-    override fun setBottomBar() {
-        bottomBar = findViewById(R.id.include)
-        setItems()
-    }
 
     private var songList: List<WebSong>? = null
 
@@ -37,7 +32,6 @@ class WebBoardActivity : MenuBaseActivity() {
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
-
             }
         }
     }
@@ -56,9 +50,7 @@ class WebBoardActivity : MenuBaseActivity() {
 
     fun list(json: JSONArray)  {
         try {
-
             val tempList = ArrayList<WebSong>()
-
 
             for (i in 0 until json.length()) {
                 val rec = json.getJSONObject(i)
@@ -71,19 +63,13 @@ class WebBoardActivity : MenuBaseActivity() {
                     tempList.add(WebSong(artist = artist, count = added, img = cover, title = title))
                 }
                 catch (e:JSONException){}
-
-                Log.d("test2",title)
-
             }
-
             songList = tempList
             webList.adapter = WebAdapter(applicationContext, R.layout.list_item, songList!!)
 
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-
-
     }
 
     override fun onResume() {
@@ -101,5 +87,10 @@ class WebBoardActivity : MenuBaseActivity() {
     override fun listenedAddedAt(position: Int) {}
 
     override fun scrollTo(position: Int) {}
+
+    override fun setBottomBar() {
+        bottomBar = findViewById(R.id.include)
+        setItems()
+    }
 
 }

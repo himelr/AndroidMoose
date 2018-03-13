@@ -7,6 +7,7 @@ import moosedroid.Views.*
 /**
  * Created by HimelR on 24-Feb-18.
  */
+//Subcomponents
 @Subcomponent
 interface ListenedSubComponent6 : AndroidInjector<MenuBaseActivity> {
 

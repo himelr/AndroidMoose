@@ -11,7 +11,7 @@ import com.android.volley.toolbox.Volley;
 /**
  * Created by HimelR on 10-Mar-18.
  */
-
+//Loads the image with volley
 public class LoadImage {
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;

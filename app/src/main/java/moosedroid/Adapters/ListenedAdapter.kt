@@ -8,7 +8,7 @@ import android.widget.TextView
 import moosedroid.Models.Listened
 import moosedroid.Views.ListenedDetailActivity
 
-
+//User listened adapter
 class ListenedAdapter(var listenedList: List<Listened>, var context: Context) : android.support.v7.widget.RecyclerView.Adapter<ListenedAdapter.ListenedViewHolder>() {
 
     override fun onCreateViewHolder(parent: android.view.ViewGroup, type: Int): ListenedViewHolder {

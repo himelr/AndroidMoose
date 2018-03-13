@@ -8,7 +8,9 @@ import moosedroid.Models.User
 /**
  * Created by HimelR on 17-Feb-18.
  */
+//Data object model
 @Dao interface UserDao {
+    //Flowable list (Rx Java)
     @Query("select * from User")
         fun getAllUsers(): Flowable<List<User>>
 
@@ -20,7 +22,6 @@ import moosedroid.Models.User
 
     @Insert(onConflict = REPLACE)
     fun insertUser(User: User)
-
 
     @Update(onConflict = REPLACE)
     fun updateUser(User: User)

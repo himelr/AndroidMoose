@@ -21,7 +21,7 @@ import moosedroid.Presenter.ListenedPresenter
 import moosedroid.Models.Listened
 import javax.inject.Inject
 
-
+//Has the listened details. Map + Youtube
 class ListenedDetailActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener, ListenedPresentation, OnMapReadyCallback {
 
 
@@ -32,7 +32,6 @@ class ListenedDetailActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
     private lateinit var mMap: GoogleMap
     @Inject
     lateinit var presenter: ListenedPresenter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -59,11 +58,9 @@ class ListenedDetailActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
             sendIntent.putExtra(Intent.EXTRA_TEXT, "I just listened to " + listened?.title + " by " + listened?.artist + " on MooseDroid")
             sendIntent.type = "text/plain"
 
-
             if (sendIntent.resolveActivity(packageManager) != null) {
                 startActivity(sendIntent)
             }
-
         }
     }
 
@@ -75,7 +72,6 @@ class ListenedDetailActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
         mMap.isBuildingsEnabled = true
 
     }
-
 
     override fun onInitializationSuccess(provider: YouTubePlayer.Provider, player: YouTubePlayer, wasRestored: Boolean) {
         if (!wasRestored) {

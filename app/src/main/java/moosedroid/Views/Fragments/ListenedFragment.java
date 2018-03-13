@@ -9,23 +9,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
 import com.acrcloud.rec.mooseb.R;
 import moosedroid.Adapters.MyListenedRecyclerViewAdapter;
 import moosedroid.Models.Listened;
-
-
 import java.util.Collections;
 import java.util.List;
 
 
-
+//Fragment containing Listened data in a list
 public class ListenedFragment extends Fragment  {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private RecyclerView recyclerView;

@@ -18,6 +18,7 @@ import moosedroid.Service.LoadImage
 /**
  * Created by HimelR on 08-Feb-18.
  */
+//Web activity adapter
 class WebAdapter constructor(private val context: Context, private val item_layout: Int, private val songs: List<WebSong>) : ListAdapter {
     private val loadImage = LoadImage(context)
 

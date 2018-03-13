@@ -9,6 +9,7 @@ import java.util.*
 /**
  * Created by HimelR on 17-Feb-18.
  */
+//Data class for user
 @Entity(tableName = "User")
 data class User(@ColumnInfo(name="email")var email: String){
 

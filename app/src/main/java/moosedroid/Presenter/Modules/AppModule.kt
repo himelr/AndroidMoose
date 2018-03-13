@@ -9,6 +9,7 @@ import moosedroid.Room.AppDatabase
 /**
  * Created by HimelR on 17-Feb-18.
  */
+//@Module annotation tells Dagger that the AppModule class will provide dependencies for a part of the application.
 @Module
 class AppModule(private val context: Context) {
 
@@ -20,7 +21,7 @@ class AppModule(private val context: Context) {
             Room.databaseBuilder(context, AppDatabase::class.java, "moosedroid-db").allowMainThreadQueries().build()
 
     @Provides
-    fun providesToDoDao(database: AppDatabase) = database.userDao()
+    fun providesUserDao(database: AppDatabase) = database.userDao()
     @Provides
     fun providesSongDao(database: AppDatabase) = database.listenedDao()
 

@@ -17,6 +17,7 @@ import moosedroid.Views.MenuBaseActivity
 /**
  * Created by HimelR on 17-Feb-18.
  */
+//Provide dependencies to activities
 @Module(subcomponents = arrayOf(UserSubComponent::class))
 abstract class UserModule {
 

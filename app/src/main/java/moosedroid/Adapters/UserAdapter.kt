@@ -5,7 +5,7 @@ import moosedroid.Models.User
 
 /**
  * Created by HimelR on 18-Feb-18.
- */
+ *///User activity adapter
     class UserAdapter(var users: List<User>) : android.support.v7.widget.RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     override fun onCreateViewHolder(parent: android.view.ViewGroup, type: Int): UserViewHolder {

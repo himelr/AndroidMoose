@@ -38,7 +38,7 @@ import moosedroid.Models.Listened
 import org.json.JSONArray
 import javax.inject.Inject
 
-
+//Main activity contains music recognition implementation
 class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.StartIntent {
 
     private val mClient: ACRCloudClient = ACRCloudClient()
@@ -116,7 +116,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
         }
 
     }
-
+    //Checks permissions. Start recording.
     private fun start() {
         if (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -152,7 +152,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
             this.mResult!!.text = ""
         }
     }*/
-
+    //When result is found. Parses through the result string.
     override fun onResult(result: String) {
         switch = true
         imageButton.setBackgroundResource(R.drawable.ic_mic_none_black_64dp)
@@ -219,17 +219,17 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
             } else {
                 tres = result
                 mResult?.text = j.toString(3)
-                volume.text = "Song not found!"
+                volume.text = getString(R.string.not_found)
             }
         } catch (e: JSONException) {
             tres = result
-            mResult?.text = "Error occurred"
+            mResult?.text = getString(R.string.error)
             e.printStackTrace()
         }
     }
-
+    //Saves the data to database
     private fun saveData(musics: JSONArray, tres: String) {
-
+        //Creates a observable which returns location data.
         val locationObservable: Observable<Location?> = Observable.create {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -244,6 +244,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
             } else {
             }
         }
+        //Location data retrieved. Parses through the JSON
         locationObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe { location ->
             val j = JSONObject(tres)
             val metadata = j.getJSONObject("metadata")
@@ -329,11 +330,9 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
         if (this.mClient != null) {
             this.mClient.release()
             this.initState = false
-
         }
-
     }
-
+    //Recognize
     private fun recognizeMusic() {
 
         if (!this.initState) {
@@ -353,7 +352,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
         }
 
     }
-
+    //Starts the activity when song has been Listened
     override fun startIntent(id: Long) {
 
         val intent = Intent(applicationContext, ListenedDetailActivity::class.java)
