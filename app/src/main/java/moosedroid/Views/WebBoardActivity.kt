@@ -10,7 +10,7 @@ import com.acrcloud.rec.mooseb.R
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_web_board.*
 import moosedroid.Models.Listened
-import moosedroid.Service.WebAdapter
+import moosedroid.Adapters.WebAdapter
 import moosedroid.Service.WebService
 import moosedroid.Models.WebSong
 import org.json.JSONArray
@@ -77,7 +77,7 @@ class WebBoardActivity : MenuBaseActivity() {
             }
 
             songList = tempList
-            webList.adapter = WebAdapter(applicationContext,R.layout.list_item,songList!!)
+            webList.adapter = WebAdapter(applicationContext, R.layout.list_item, songList!!)
 
         } catch (e: JSONException) {
             e.printStackTrace()

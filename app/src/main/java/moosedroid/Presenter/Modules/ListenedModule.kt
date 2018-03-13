@@ -1,4 +1,4 @@
-package moosedroid.Presenter
+package moosedroid.Presenter.Modules
 
 import android.app.Activity
 import dagger.Binds
@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.android.ActivityKey
 import dagger.android.AndroidInjector
 import dagger.multibindings.IntoMap
+import moosedroid.Presenter.Components.*
 import moosedroid.Views.*
 
 /**
@@ -31,7 +32,7 @@ abstract class ListenedModule2 {
 }
 
 
-@Module(subcomponents = arrayOf(ListenedSubComponent3::class,UserSubComponent4::class))
+@Module(subcomponents = arrayOf(ListenedSubComponent3::class, UserSubComponent4::class))
 abstract class ListenedModule3 {
 
     @Binds

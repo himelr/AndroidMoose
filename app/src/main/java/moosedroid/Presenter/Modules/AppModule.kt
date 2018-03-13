@@ -1,4 +1,4 @@
-package moosedroid.Presenter
+package moosedroid.Presenter.Modules
 
 import android.arch.persistence.room.Room
 import android.content.Context

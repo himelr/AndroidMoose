@@ -1,4 +1,4 @@
-package moosedroid.Presenter
+package moosedroid.Adapters
 
 import android.content.Context
 import android.content.Intent

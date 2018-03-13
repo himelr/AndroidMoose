@@ -9,7 +9,7 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_test_user.*
 import moosedroid.Models.Listened
 import moosedroid.Models.User
-import moosedroid.Room.UserAdapter
+import moosedroid.Adapters.UserAdapter
 import moosedroid.Views.MenuBaseActivity
 import javax.inject.Inject
 

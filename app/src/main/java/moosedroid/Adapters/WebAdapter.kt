@@ -1,4 +1,5 @@
-package moosedroid.Presenter
+package moosedroid.Adapters
+
 
 import android.content.Context
 import android.database.DataSetObserver
@@ -7,14 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListAdapter
 import android.widget.TextView
-import com.acrcloud.rec.mooseb.R.id.item2
-import moosedroid.Models.User
+import com.acrcloud.rec.mooseb.R
+import com.acrcloud.rec.mooseb.R.id.*
+import com.android.volley.toolbox.NetworkImageView
+import moosedroid.Models.WebSong
+import moosedroid.Service.LoadImage
 
 
 /**
  * Created by HimelR on 08-Feb-18.
  */
-class CustomAdapter constructor(private val context: Context, private val item_layout: Int, private val users: List<User>): ListAdapter  {
+class WebAdapter constructor(private val context: Context, private val item_layout: Int, private val songs: List<WebSong>) : ListAdapter {
+    private val loadImage = LoadImage(context)
+
     private val observerChangeSet: MutableSet<DataSetObserver> = hashSetOf()
 
     override fun areAllItemsEnabled(): Boolean {
@@ -36,15 +42,15 @@ class CustomAdapter constructor(private val context: Context, private val item_l
     }
 
     override fun getCount(): Int {
-        return users.size
+        return songs.size
     }
 
     override fun getItem(position: Int): Any {
-        return users[position]
+        return songs[position]
     }
 
     override fun getItemId(position: Int): Long {
-        return users[position].id
+        return position.toLong()
     }
 
     override fun hasStableIds(): Boolean {
@@ -60,7 +66,7 @@ class CustomAdapter constructor(private val context: Context, private val item_l
     }
 
     override fun isEmpty(): Boolean {
-        return users.isEmpty()
+        return songs.isEmpty()
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -70,11 +76,15 @@ class CustomAdapter constructor(private val context: Context, private val item_l
             convertView = inflater.inflate(item_layout, null)
         }
 
-        val p = users[position]
-        convertView!!.findViewById<TextView>(item2).text = p.email
+        val p = songs[position]
+        convertView!!.findViewById<TextView>(item2).text = p.title
+        convertView!!.findViewById<TextView>(item3).text = p.artist
+        convertView!!.findViewById<TextView>(item4).text = p.count.toString() + " added"
 
-
+        val avatar = convertView!!.findViewById(R.id.cover) as NetworkImageView
+        avatar.setImageUrl(p.img, loadImage.getmImageLoader())
 
         return convertView!!
     }
+
 }

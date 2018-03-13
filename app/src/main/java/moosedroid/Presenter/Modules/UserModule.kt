@@ -1,4 +1,4 @@
-package moosedroid.Presenter
+package moosedroid.Presenter.Modules
 
 import android.app.Activity
 import dagger.Binds
@@ -7,6 +7,11 @@ import dagger.android.ActivityKey
 import dagger.android.AndroidInjector
 import dagger.multibindings.IntoMap
 import moosedroid.Firebase.SignupFireActivity
+import moosedroid.Presenter.Components.ListenedSubComponent6
+import moosedroid.Presenter.Components.UserSubComponent
+import moosedroid.Presenter.Components.UserSubComponent2
+import moosedroid.Presenter.Components.UserSubComponent3
+import moosedroid.Presenter.TestUser
 import moosedroid.Views.MenuBaseActivity
 
 /**

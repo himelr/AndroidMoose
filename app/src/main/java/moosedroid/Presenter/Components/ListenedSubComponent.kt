@@ -1,4 +1,4 @@
-package moosedroid.Presenter
+package moosedroid.Presenter.Components
 
 import dagger.Subcomponent
 import dagger.android.AndroidInjector

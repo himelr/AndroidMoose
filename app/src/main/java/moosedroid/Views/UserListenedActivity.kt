@@ -7,7 +7,7 @@ import android.view.Menu
 import com.acrcloud.rec.mooseb.R
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_user_listened.*
-import moosedroid.Presenter.ListenedAdapter
+import moosedroid.Adapters.ListenedAdapter
 import moosedroid.Presenter.ListenedPresentation
 import moosedroid.Models.Listened
 
@@ -15,7 +15,7 @@ class UserListenedActivity : MenuBaseActivity(), ListenedPresentation {
 
 
     override fun showListened(listenedList: List<Listened>) {
-           list2.adapter = ListenedAdapter(listenedList,this)
+           list2.adapter = ListenedAdapter(listenedList, this)
     }
 
     override fun listenedAddedAt(position: Int) {
@@ -36,7 +36,7 @@ class UserListenedActivity : MenuBaseActivity(), ListenedPresentation {
 
         recyclerView = findViewById(R.id.list2)
         recyclerView?.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
-        recyclerView?.adapter = ListenedAdapter(emptyList(),this)
+        recyclerView?.adapter = ListenedAdapter(emptyList(), this)
         listenedPresenter.onCreate(this,getLoggedId()!!)
     }
 

@@ -1,8 +1,9 @@
-package moosedroid.Presenter
+package moosedroid.Presenter.Components
 
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
 import moosedroid.Firebase.SignupFireActivity
+import moosedroid.Presenter.TestUser
 import moosedroid.Views.ListenedSongActivity
 import moosedroid.Views.MenuBaseActivity
 

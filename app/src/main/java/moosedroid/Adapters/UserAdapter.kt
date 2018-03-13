@@ -1,4 +1,4 @@
-package moosedroid.Room
+package moosedroid.Adapters
 
 import android.widget.TextView
 import moosedroid.Models.User
