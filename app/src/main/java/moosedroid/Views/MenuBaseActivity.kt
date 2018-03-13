@@ -54,7 +54,6 @@ abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
         val authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
             if (user == null) {
-                println("Logout Firex")
                 Log.d("test2", "logout")
                 // user auth state is changed - user is null
                 // launch login activity
@@ -115,8 +114,22 @@ abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
                 alertDialog.show()
                 return true
             }
-            android.R.id.home ->{
+            android.R.id.home -> {
                 super.finish()
+                return true
+            }
+            R.id.delete -> {
+                val alertDialog = AlertDialog.Builder(this).create()
+                alertDialog.setTitle("Delete")
+                alertDialog.setMessage("Are you sure you want to delete listened?")
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "NO"
+                ) { dialog, which -> dialog.dismiss() }
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "YES"
+                ) { dialog, which ->
+                    val id = getLoggedId()!!
+                    listenedPresenter.deleteUsersListened(id)
+                }
+                alertDialog.show()
                 return true
             }
             else ->

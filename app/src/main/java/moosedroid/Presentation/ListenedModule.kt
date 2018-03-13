@@ -34,13 +34,14 @@ abstract class ListenedModule2 {
 }
 
 
-@Module(subcomponents = arrayOf(ListenedSubComponent3::class))
+@Module(subcomponents = arrayOf(ListenedSubComponent3::class,UserSubComponent4::class))
 abstract class ListenedModule3 {
 
     @Binds
     @IntoMap
     @ActivityKey(ListenedSongActivity::class)
     internal abstract fun bindsToDoActivityInjectorFactory(builder: ListenedSubComponent3.Builder): AndroidInjector.Factory<out Activity>
+    internal abstract fun bindsToDoActivityInjectorFactory2(builder: UserSubComponent4.Builder): AndroidInjector.Factory<out Activity>
 }
 
 @Module(subcomponents = arrayOf(ListenedSubComponent4::class))

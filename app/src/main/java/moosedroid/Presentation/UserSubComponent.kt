@@ -3,6 +3,7 @@ package moosedroid.Presentation
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
 import moosedroid.Firebase.SignupFireActivity
+import moosedroid.Views.ListenedSongActivity
 import moosedroid.Views.MenuBaseActivity
 
 /**
@@ -21,5 +22,9 @@ import moosedroid.Views.MenuBaseActivity
 @Subcomponent interface UserSubComponent3 : AndroidInjector<MenuBaseActivity> {
 
     @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<MenuBaseActivity>()
+}
+@Subcomponent interface UserSubComponent4 : AndroidInjector<ListenedSongActivity> {
+
+    @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<ListenedSongActivity>()
 }
 

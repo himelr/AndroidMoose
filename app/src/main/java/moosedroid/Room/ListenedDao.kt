@@ -16,6 +16,9 @@ interface ListenedDao {
     @Query("SELECT * FROM Listened ORDER BY id DESC LIMIT 1;")
     fun findNewest() : Flowable<Listened>
 
+    @Query("DELETE FROM Listened WHERE userId = :id")
+    fun deleteById(id: Long)
+
     @Insert()
     fun insertSong(listened: Listened)
 

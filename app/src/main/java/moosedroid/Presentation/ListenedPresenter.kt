@@ -42,6 +42,10 @@ class ListenedPresenter @Inject constructor(val listenedDao: ListenedDao) {
         }
         return null
     }
+    fun deleteUsersListened(id :Long){
+        listenedDao.deleteById(id)
+        presentation?.showListened(emptyList())
+    }
 
     fun getLatest() {
 

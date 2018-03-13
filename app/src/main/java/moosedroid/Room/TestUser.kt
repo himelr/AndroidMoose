@@ -20,7 +20,7 @@ class TestUser : MenuBaseActivity(), UserPresentation {
     @Inject
     lateinit var presenter: UserPresenter
 
-    var recyclerView:RecyclerView? = null
+    private var recyclerView:RecyclerView? = null
 
     override fun userAddedAt(position: Int) {
         recyclerView?.adapter?.notifyItemInserted(position)
@@ -49,10 +49,6 @@ class TestUser : MenuBaseActivity(), UserPresentation {
         recyclerView?.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         recyclerView?.adapter = UserAdapter(emptyList())
         presenter.onCreate(this)
-
-    /*    presenter.addNewUser("poggers")
-        var song:Listened = Listened("Owo", "monki","chicken", 1L)
-        presenter2.addNewSong(song)*/
 
         }
     override fun setBottomBar() {
