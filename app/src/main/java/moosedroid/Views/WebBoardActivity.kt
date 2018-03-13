@@ -6,17 +6,15 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
-import android.widget.ListView
 import com.acrcloud.rec.mooseb.R
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_web_board.*
-import moosedroid.Room.Listened
+import moosedroid.Models.Listened
 import moosedroid.Service.WebAdapter
 import moosedroid.Service.WebService
-import moosedroid.Service.WebSong
+import moosedroid.Models.WebSong
 import org.json.JSONArray
 import org.json.JSONException
-import org.json.JSONObject
 import java.util.ArrayList
 
 class WebBoardActivity : MenuBaseActivity() {
@@ -70,7 +68,7 @@ class WebBoardActivity : MenuBaseActivity() {
 
                 try {
                     val cover = rec.getString("cover")
-                    tempList.add(WebSong(artist = artist,count = added,img = cover,title = title))
+                    tempList.add(WebSong(artist = artist, count = added, img = cover, title = title))
                 }
                 catch (e:JSONException){}
 

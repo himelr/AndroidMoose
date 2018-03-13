@@ -15,7 +15,7 @@ import com.acrcloud.rec.mooseb.R;
 
 import moosedroid.Presentation.ListenedPresenter;
 import moosedroid.Room.AppDatabase;
-import moosedroid.Room.Listened;
+import moosedroid.Models.Listened;
 import moosedroid.Room.ListenedViewModel;
 
 import java.util.Collections;

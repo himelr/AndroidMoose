@@ -1,4 +1,4 @@
-package moosedroid.Room
+package moosedroid.Models
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity

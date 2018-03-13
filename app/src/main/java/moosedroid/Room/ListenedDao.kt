@@ -2,6 +2,7 @@ package moosedroid.Room
 
 import android.arch.persistence.room.*
 import io.reactivex.Flowable
+import moosedroid.Models.Listened
 
 
 /**

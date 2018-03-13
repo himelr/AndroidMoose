@@ -1,4 +1,4 @@
-package moosedroid.Service
+package moosedroid.Models
 
 /**
  * Created by HimelR on 09-Mar-18.

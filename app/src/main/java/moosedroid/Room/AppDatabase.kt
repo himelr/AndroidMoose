@@ -1,9 +1,9 @@
 package moosedroid.Room
 
 import android.arch.persistence.room.Database
-import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
-import android.content.Context
+import moosedroid.Models.Listened
+import moosedroid.Models.User
 
 /**
  * Created by HimelR on 17-Feb-18.

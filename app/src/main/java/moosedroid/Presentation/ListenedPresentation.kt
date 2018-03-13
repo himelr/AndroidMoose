@@ -1,6 +1,6 @@
 package moosedroid.Presentation
 
-import moosedroid.Room.Listened
+import moosedroid.Models.Listened
 
 /**
  * Created by HimelR on 02-Mar-18.

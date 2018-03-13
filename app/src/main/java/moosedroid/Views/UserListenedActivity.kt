@@ -10,13 +10,11 @@ import kotlinx.android.synthetic.main.activity_user_listened.*
 import moosedroid.Presentation.ListenedAdapter
 import moosedroid.Presentation.ListenedPresentation
 import moosedroid.Presentation.ListenedPresenter
-import moosedroid.Room.Listened
+import moosedroid.Models.Listened
 import javax.inject.Inject
 
 class UserListenedActivity : MenuBaseActivity(), ListenedPresentation {
 
-    @Inject
-    lateinit var presenter2: ListenedPresenter
 
     override fun showListened(listenedList: List<Listened>) {
            list2.adapter = ListenedAdapter(listenedList,this)
@@ -41,7 +39,7 @@ class UserListenedActivity : MenuBaseActivity(), ListenedPresentation {
         recyclerView = findViewById(R.id.list2)
         recyclerView?.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         recyclerView?.adapter = ListenedAdapter(emptyList(),this)
-        presenter2.onCreate(this,getLoggedId()!!)
+        listenedPresenter.onCreate(this,getLoggedId()!!)
     }
 
     override fun setBottomBar() {

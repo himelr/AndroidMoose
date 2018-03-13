@@ -12,14 +12,12 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.firebase.auth.FirebaseAuth
 import dagger.android.AndroidInjection
-import moosedroid.Presentation.ListenedAdapter
 import moosedroid.Presentation.ListenedPresentation
 import moosedroid.Presentation.ListenedPresenter
 import moosedroid.Presentation.UserPresenter
-import moosedroid.Room.Listened
-import moosedroid.Room.User
+import moosedroid.Models.Listened
+import moosedroid.Models.User
 import moosedroid.Views.Fragments.ListenedFragment
-import moosedroid.Views.Fragments.dummy.DummyContent
 import javax.inject.Inject
 
 

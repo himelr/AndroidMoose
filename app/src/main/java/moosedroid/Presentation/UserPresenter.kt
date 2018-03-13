@@ -3,7 +3,7 @@ package moosedroid.Presentation
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import moosedroid.Room.User
+import moosedroid.Models.User
 import moosedroid.Room.UserDao
 import java.util.*
 import io.reactivex.Observable

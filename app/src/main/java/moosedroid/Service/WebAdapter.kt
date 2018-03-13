@@ -3,22 +3,15 @@ package moosedroid.Service
 
 import android.content.Context
 import android.database.DataSetObserver
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.os.AsyncTask
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.ListAdapter
 import android.widget.TextView
 import com.acrcloud.rec.mooseb.R
 import com.acrcloud.rec.mooseb.R.id.*
-import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.NetworkImageView
-import kotlinx.android.synthetic.main.list_item.view.*
-import moosedroid.Room.User
-import java.net.URL
+import moosedroid.Models.WebSong
 
 
 /**

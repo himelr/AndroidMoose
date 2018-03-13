@@ -1,16 +1,14 @@
 package moosedroid.Presentation
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import com.acrcloud.rec.mooseb.R
 import com.acrcloud.rec.mooseb.R.layout.activity_test_user
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_test_user.*
-import moosedroid.Room.Listened
-import moosedroid.Room.User
+import moosedroid.Models.Listened
+import moosedroid.Models.User
 import moosedroid.Room.UserAdapter
 import moosedroid.Views.MenuBaseActivity
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package moosedroid.Room
+package moosedroid.Models
 
 import android.arch.persistence.room.*
 import android.arch.persistence.room.ForeignKey.CASCADE

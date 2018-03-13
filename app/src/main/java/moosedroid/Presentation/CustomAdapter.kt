@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ListAdapter
 import android.widget.TextView
 import com.acrcloud.rec.mooseb.R.id.item2
-import moosedroid.Room.User
+import moosedroid.Models.User
 
 
 /**

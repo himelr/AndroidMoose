@@ -1,6 +1,7 @@
 package moosedroid.Room
 
 import android.widget.TextView
+import moosedroid.Models.User
 
 /**
  * Created by HimelR on 18-Feb-18.

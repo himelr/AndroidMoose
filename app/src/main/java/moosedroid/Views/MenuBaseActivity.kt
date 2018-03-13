@@ -2,7 +2,6 @@ package moosedroid.Views
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.BaseTransientBottomBar
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -18,9 +17,8 @@ import moosedroid.Presentation.ListenedPresentation
 import moosedroid.Presentation.ListenedPresenter
 import moosedroid.Presentation.TestUser
 import moosedroid.Presentation.UserPresenter
-import moosedroid.Room.Listened
-import moosedroid.Room.User
-import java.lang.IllegalStateException
+import moosedroid.Models.Listened
+import moosedroid.Models.User
 import javax.inject.Inject
 
 /**
@@ -155,5 +153,11 @@ abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
         return user?.id
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        listenedPresenter.onDestroy()
+        userPresenter.onDestroy()
+
+    }
 
 }

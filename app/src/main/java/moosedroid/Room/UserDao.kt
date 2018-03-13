@@ -3,6 +3,7 @@ package moosedroid.Room
 import android.arch.persistence.room.*
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
 import io.reactivex.Flowable
+import moosedroid.Models.User
 
 /**
  * Created by HimelR on 17-Feb-18.

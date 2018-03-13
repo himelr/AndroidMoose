@@ -1,15 +1,12 @@
 package moosedroid.Presentation
 
-import android.os.SystemClock
 import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import moosedroid.Room.Listened
+import moosedroid.Models.Listened
 import moosedroid.Room.ListenedDao
 import javax.inject.Inject
-import io.reactivex.Observable
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by HimelR on 24-Feb-18.
@@ -78,6 +75,12 @@ class ListenedPresenter @Inject constructor(private val listenedDao: ListenedDao
                     presentation?.showListened(listenedList)
                 }))
     }
+
+    fun onDestroy() {
+        compositeDisposable.dispose()
+        presentation = null
+    }
+
 
     interface StartIntent {
         fun startIntent(id: Long)

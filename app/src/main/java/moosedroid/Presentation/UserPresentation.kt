@@ -1,6 +1,6 @@
 package moosedroid.Presentation
 
-import moosedroid.Room.User
+import moosedroid.Models.User
 
 /**
  * Created by HimelR on 17-Feb-18.

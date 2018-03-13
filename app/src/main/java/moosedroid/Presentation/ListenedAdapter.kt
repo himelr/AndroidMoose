@@ -3,14 +3,13 @@ package moosedroid.Presentation
 import android.content.Context
 import android.content.Intent
 import android.support.v4.content.ContextCompat.startActivity
-import android.support.v7.app.AlertDialog
 
 import android.widget.TextView
-import moosedroid.Room.Listened
+import moosedroid.Models.Listened
 import moosedroid.Views.ListenedDetailActivity
 
 
-class ListenedAdapter(var listenedList: List<Listened>,var context: Context) : android.support.v7.widget.RecyclerView.Adapter<ListenedAdapter.ListenedViewHolder>() {
+class ListenedAdapter(var listenedList: List<Listened>, var context: Context) : android.support.v7.widget.RecyclerView.Adapter<ListenedAdapter.ListenedViewHolder>() {
 
     override fun onCreateViewHolder(parent: android.view.ViewGroup, type: Int): ListenedViewHolder {
         return ListenedViewHolder(parent)

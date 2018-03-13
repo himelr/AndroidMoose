@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import moosedroid.Models.Listened;
+
 /**
  * Created by HimelR on 06-Mar-18.
  */

@@ -8,32 +8,19 @@ import org.json.JSONObject
 import com.acrcloud.rec.sdk.ACRCloudConfig
 import com.acrcloud.rec.sdk.ACRCloudClient
 import com.acrcloud.rec.sdk.IACRCloudListener
-import com.google.firebase.auth.FirebaseAuth
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.ActivityOptions
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Environment
-import android.os.SystemClock
-import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.acrcloud.rec.mooseb.R
@@ -46,21 +33,15 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_listened_detail.*
 import kotlinx.android.synthetic.main.activity_main.*
-import moosedroid.Firebase.LoginFireActivity
 import moosedroid.Presentation.ListenedPresenter
-import moosedroid.Presentation.TestUser
-import moosedroid.Room.Listened
-import moosedroid.Room.User
+import moosedroid.Models.Listened
 import org.json.JSONArray
-import java.lang.IllegalStateException
 import javax.inject.Inject
 
 
 class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.StartIntent {
 
-    private val TEST = "test2"
     private val mClient: ACRCloudClient = ACRCloudClient()
     private val mConfig: ACRCloudConfig = ACRCloudConfig()
 
@@ -76,9 +57,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
     private var startTime: Long = 0
     private var stopTime: Long = 0
     private val MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 23
-    private val MY_PERMISSIONS_REQUEST_LOCATION_DATA = 24
 
-    private var compositeDisposable = CompositeDisposable()
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var mlocationManager: LocationManager? = null
     private var switch = true
@@ -132,13 +111,9 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
         this.mConfig.reqMode = ACRCloudConfig.ACRCloudRecMode.REC_MODE_REMOTE
         //this.mConfig.reqMode = ACRCloudConfig.ACRCloudRecMode.REC_MODE_LOCAL;
         //this.mConfig.reqMode = ACRCloudConfig.ACRCloudRecMode.REC_MODE_BOTH;
-
-
-        // If reqMode is REC_MODE_LOCAL or REC_MODE_BOTH,
-        // the function initWithConfig is used to load offline db, and it may cost long time.
         this.initState = this.mClient.initWithConfig(this.mConfig)
         if (this.initState) {
-            this.mClient.startPreRecord(3000) //start prerecord, you can call "this.mClient.stopPreRecord()" to stop prerecord.
+            this.mClient.startPreRecord(3000) //start prerecord.
         }
 
     }
@@ -169,7 +144,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
 
         stopTime = System.currentTimeMillis()
     }
-
+/*
     private fun cancel() {
         if (mProcessing && this.mClient != null) {
             mProcessing = false
@@ -177,7 +152,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
             this.tv_time!!.text = ""
             this.mResult!!.text = ""
         }
-    }
+    }*/
 
     override fun onResult(result: String) {
         switch = true
@@ -300,7 +275,16 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
                 val genres: JSONArray? = external?.getJSONArray("genres")
                 val genreObj: JSONObject? = genres?.getJSONObject(0)
                 val genreT: String? = genreObj?.getString("name")
-                genre = genreT ?: ""
+                genre += genreT ?: ""
+
+                try {
+                    val genreObj2: JSONObject? = genres?.getJSONObject(1)
+                    val genreT2: String? = genreObj2?.getString("name")
+                    genre += "/$genreT2"
+                }
+                catch (e:JSONException){
+
+                }
             } catch (e: JSONException) {
             }
 
