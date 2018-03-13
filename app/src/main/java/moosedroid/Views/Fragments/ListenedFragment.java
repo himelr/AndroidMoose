@@ -12,23 +12,15 @@ import android.view.ViewGroup;
 
 
 import com.acrcloud.rec.mooseb.R;
-
 import moosedroid.Adapters.MyListenedRecyclerViewAdapter;
-import moosedroid.Presenter.ListenedPresenter;
-import moosedroid.Room.AppDatabase;
 import moosedroid.Models.Listened;
-import moosedroid.Room.ListenedViewModel;
+
 
 import java.util.Collections;
 import java.util.List;
 
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
+
 public class ListenedFragment extends Fragment  {
 
     // TODO: Customize parameter argument names
@@ -37,19 +29,10 @@ public class ListenedFragment extends Fragment  {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
-    private ListenedPresenter presenter;
-    private ListenedViewModel viewModel;
-    private Context context;
-    AppDatabase database;
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
+
     public ListenedFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static ListenedFragment newInstance(int columnCount) {
         ListenedFragment fragment = new ListenedFragment();
         Bundle args = new Bundle();
@@ -61,9 +44,6 @@ public class ListenedFragment extends Fragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //viewModel = ViewModelProviders.of(this.).get(ListenedViewModel.class);
-
-
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -85,7 +65,6 @@ public class ListenedFragment extends Fragment  {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-
             recyclerView.setAdapter(new MyListenedRecyclerViewAdapter(Collections.<Listened>emptyList(), mListener));
         }
         return view;
@@ -111,24 +90,12 @@ public class ListenedFragment extends Fragment  {
 
     public void addList(List<Listened> list){
         getRecyclerView().setAdapter(new MyListenedRecyclerViewAdapter(list, mListener));
-
     }
 
     public RecyclerView getRecyclerView() {
         return recyclerView;
     }
 
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Listened item);

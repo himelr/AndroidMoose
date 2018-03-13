@@ -45,20 +45,17 @@
         <activity android:name="moosedroid.Firebase.SignupFireActivity" />
         <activity android:name="moosedroid.Firebase.ResetPasswordFireActivity" />
         <activity
-            android:name="moosedroid.Presenter.TestUser"
+            android:name="moosedroid.Presenter.UserActivity"
             android:launchMode="singleTask" />
         <activity android:name="moosedroid.Views.UserListenedActivity"
             android:launchMode="singleTask"/>
-        <activity android:name="moosedroid.Views.ListenedSongActivity" />
-        <activity android:name="moosedroid.Views.ListenedActivity" />
+        <activity android:name="moosedroid.Views.ListenedSongActivity"
+            android:launchMode="singleTask"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAGZEnFVDQxTtA4DkK4HlplQm5MM-CvNdw" />
 
-        <activity
-            android:name="moosedroid.Views.MapsActivity"
-            android:label="@string/title_activity_maps" />
         <activity android:name="moosedroid.Views.ListenedDetailActivity"
             android:launchMode="singleTask">
             <meta-data

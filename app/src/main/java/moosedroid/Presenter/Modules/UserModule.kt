@@ -11,7 +11,7 @@ import moosedroid.Presenter.Components.ListenedSubComponent6
 import moosedroid.Presenter.Components.UserSubComponent
 import moosedroid.Presenter.Components.UserSubComponent2
 import moosedroid.Presenter.Components.UserSubComponent3
-import moosedroid.Presenter.TestUser
+import moosedroid.Presenter.UserActivity
 import moosedroid.Views.MenuBaseActivity
 
 /**
@@ -22,7 +22,7 @@ abstract class UserModule {
 
     @Binds
     @IntoMap
-    @ActivityKey(TestUser::class)
+    @ActivityKey(UserActivity::class)
     internal abstract fun bindsToDoActivityInjectorFactory(builder: UserSubComponent.Builder): AndroidInjector.Factory<out Activity>
 }
 

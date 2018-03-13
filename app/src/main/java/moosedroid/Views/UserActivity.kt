@@ -13,7 +13,7 @@ import moosedroid.Adapters.UserAdapter
 import moosedroid.Views.MenuBaseActivity
 import javax.inject.Inject
 
-class TestUser : MenuBaseActivity(), UserPresentation {
+class UserActivity : MenuBaseActivity(), UserPresentation {
 
     @Inject
     lateinit var presenter: UserPresenter

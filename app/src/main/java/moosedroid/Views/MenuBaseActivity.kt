@@ -15,7 +15,7 @@ import dagger.android.AndroidInjection
 import moosedroid.Firebase.LoginFireActivity
 import moosedroid.Presenter.ListenedPresentation
 import moosedroid.Presenter.ListenedPresenter
-import moosedroid.Presenter.TestUser
+import moosedroid.Presenter.UserActivity
 import moosedroid.Presenter.UserPresenter
 import moosedroid.Models.Listened
 import moosedroid.Models.User
@@ -87,7 +87,7 @@ abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
                 return true
             }
             R.id.users -> {
-                startActivity(Intent(this, TestUser::class.java))
+                startActivity(Intent(this, UserActivity::class.java))
                 return true
             }
             R.id.listened -> {

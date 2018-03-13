@@ -3,16 +3,16 @@ package moosedroid.Presenter.Components
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
 import moosedroid.Firebase.SignupFireActivity
-import moosedroid.Presenter.TestUser
+import moosedroid.Presenter.UserActivity
 import moosedroid.Views.ListenedSongActivity
 import moosedroid.Views.MenuBaseActivity
 
 /**
  * Created by HimelR on 17-Feb-18.
  */
-@Subcomponent interface UserSubComponent : AndroidInjector<TestUser> {
+@Subcomponent interface UserSubComponent : AndroidInjector<UserActivity> {
 
-    @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<TestUser>()
+    @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<UserActivity>()
 }
 
 @Subcomponent interface UserSubComponent2 : AndroidInjector<SignupFireActivity> {

@@ -3,6 +3,7 @@ package moosedroid.Views
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.util.Log
+import android.view.Menu
 import com.acrcloud.rec.mooseb.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,43 +22,37 @@ import moosedroid.Views.Fragments.ListenedFragment
 import javax.inject.Inject
 
 
-class ListenedSongActivity : FragmentActivity(),OnMapReadyCallback,ListenedFragment.OnListFragmentInteractionListener, ListenedPresentation {
-    
-    private val auth = FirebaseAuth.getInstance()!!
+class ListenedSongActivity : MenuBaseActivity(), OnMapReadyCallback, ListenedFragment.OnListFragmentInteractionListener, ListenedPresentation {
+
     private lateinit var mMap: GoogleMap
-    private var listenedFragment:ListenedFragment? = null
-    
-    @Inject
-    lateinit var listenedPresenter: ListenedPresenter
-    
-    @Inject
-    lateinit var userPresenter: UserPresenter
+    private var listenedFragment: ListenedFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
+        upVar = true
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_listened_song)
 
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-        listenedPresenter.onCreate(this,getLoggedId())
     }
 
     override fun onMapReady(map: GoogleMap) {
         mMap = map
         listenedFragment = fragmentManager.findFragmentById(R.id.listFragment) as ListenedFragment
         listenedFragment!!.addList(listenedPresenter.listenedList)
+        listenedPresenter.onCreate(this, getLoggedId()!!)
     }
 
     override fun onListFragmentInteraction(item: Listened?) {
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(item?.latitude!!,item?.longitude!!),15.0f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(item?.latitude!!, item?.longitude!!), 15.0f))
     }
 
     override fun showListened(listenedList: List<Listened>) {
-        for (location in listenedPresenter.listenedList){
-            Log.d("test2","adding")
+        mMap.clear()
+        listenedFragment!!.addList(listenedList)
+        for (location in listenedPresenter.listenedList) {
+            Log.d("test2", "adding")
             val markerL = LatLng(location.latitude!!, location.longitude!!)
             mMap.addMarker(MarkerOptions().position(markerL).title(location.title + "\n" + location.date))
         }
@@ -68,12 +63,20 @@ class ListenedSongActivity : FragmentActivity(),OnMapReadyCallback,ListenedFragm
     }
 
     override fun scrollTo(position: Int) {
-       listenedFragment?.recyclerView?.smoothScrollToPosition(position)
+        listenedFragment?.recyclerView?.smoothScrollToPosition(position)
+    }
+    override fun getLayoutResourceId(): Int {
+        return R.layout.activity_listened_song
     }
 
-    private fun getLoggedId(): Long {
-        val user: User? = userPresenter.userDao.findUserByEmail(auth.currentUser?.email!!)
-        return user!!.id
+    override fun setBottomBar() {
+        bottomBar = findViewById(R.id.include3)
+        setItems()
+    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.actionbar_user_listened, menu)
+        return true
     }
 
 }
