@@ -73,9 +73,6 @@ abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_settings ->
-                // User chose the "Settings" item, show the app settings UI...
-                return true
 
             R.id.action_favorite -> {
                 val alertDialog = AlertDialog.Builder(this).create()
@@ -88,8 +85,6 @@ abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
                     if (auth.currentUser != null) {
                         auth.signOut()
                     }
-
-                    //dialog.dismiss();
                 }
                 alertDialog.show()
                 return true
@@ -97,12 +92,10 @@ abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
             R.id.users -> {
                 startActivity(Intent(this, TestUser::class.java))
                 return true
-
             }
             R.id.listened -> {
                 startActivity(Intent(this, UserListenedActivity::class.java))
                 return true
-
             }
 
             R.id.populate -> {
@@ -140,7 +133,6 @@ abstract class MenuBaseActivity : AppCompatActivity(), ListenedPresentation {
                 R.id.action_item2 -> startActivity(Intent(this, ListenedSongActivity::class.java))
                 R.id.action_item3 -> startActivity(Intent(this, WebBoardActivity::class.java))
             }
-
             true
         }
     }

@@ -356,9 +356,6 @@ public class MainActivity extends AppCompatActivity implements IACRCloudListener
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
 
             case R.id.action_favorite:
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();

@@ -62,6 +62,6 @@
     <string name="player_error">Error initializing YouTube player: %s</string>
     <string name="seek_to">Jump To</string>
     <string name="seek_to_hint">Seconds</string>
-    <string name="press_mic_to_start">Press Mic To Start</string>
+    <string name="press_mic_to_start">Press mic to start recognizing</string>
 
 </resources>

@@ -96,11 +96,8 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
         super.onCreate(savedInstanceState)
 
         presenter.onCreate(this, getLoggedId()!!, this)
-
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         mlocationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-
-        Log.d(TEST, "launch")
         path = Environment.getExternalStorageDirectory().toString() + "/acrcloud/model"
 
         val file = File(path)
@@ -125,12 +122,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
             }
         }
 
-
         this.mConfig.acrcloudListener = this
-
-        // If you implement IACRCloudResultWithAudioListener and override "onResult(ACRCloudResult result)", you can get the Audio data.
-        //this.mConfig.acrcloudResultWithAudioListener = this;
-
         this.mConfig.context = this
         this.mConfig.host = "identify-eu-west-1.acrcloud.com"
         this.mConfig.dbPath = path // offline db path, you can change it with other path which this app can access.
@@ -149,51 +141,19 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
             this.mClient.startPreRecord(3000) //start prerecord, you can call "this.mClient.stopPreRecord()" to stop prerecord.
         }
 
-
-        // Enable the Up button
-        //ab!!.setDisplayHomeAsUpEnabled(true)
-
-
-        val serverDownloadObservable: Observable<Int> = Observable.create {
-            SystemClock.sleep(5000)
-            it.onNext(5)
-            it.onComplete()
-        }
-        serverDownloadObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe { integer ->
-            //testBox.text = integer.toString() // this methods updates the ui
-            // enables it again
-        }
-
-
     }
 
     private fun start() {
         if (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            println("aaa")
-
-
-            // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                             Manifest.permission.RECORD_AUDIO) || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION) || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
 
-
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
             } else {
-
-                // No explanation needed, we can request the permission.
-
                 ActivityCompat.requestPermissions(this,
                         arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
                         MY_PERMISSIONS_REQUEST_RECORD_AUDIO)
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
             }
         } else {
             recognizeMusic()
@@ -201,7 +161,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
         }
     }
 
-    protected fun stop() {
+    private fun stop() {
         if (mProcessing && this.mClient != null) {
             this.mClient.stopRecordToRecognize()
         }
@@ -210,7 +170,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
         stopTime = System.currentTimeMillis()
     }
 
-    protected fun cancel() {
+    private fun cancel() {
         if (mProcessing && this.mClient != null) {
             mProcessing = false
             this.mClient.cancel()
