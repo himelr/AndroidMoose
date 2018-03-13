@@ -16,7 +16,7 @@
         android:icon="@drawable/ic_headset_mic_black_24dp"/>
 
     <item android:id="@+id/populate"
-        android:title="Auto populate"
+        android:title="@string/auto_populate"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_favorite"

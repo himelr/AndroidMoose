@@ -135,12 +135,7 @@ public class MainActivity extends AppCompatActivity implements IACRCloudListener
         if (this.initState) {
             this.mClient.startPreRecord(3000); //start prerecord, you can call "this.mClient.stopPreRecord()" to stop prerecord.
         }
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        ActionBar ab = getSupportActionBar();
 
-        // Enable the Up button
-        ab.setDisplayHomeAsUpEnabled(true);
 
         final FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
             @Override

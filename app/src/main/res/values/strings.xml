@@ -17,7 +17,7 @@
 
     <string name="action_favorite">Logout</string>
     <string name="action_map">Map</string>
-    <string name="action_users">Users</string>
+    <string name="action_users">Local Users</string>
     <string name="item_1">Rec</string>
     <string name="item_2">Map</string>
     <string name="item_3">Web</string>
@@ -63,5 +63,6 @@
     <string name="seek_to">Jump To</string>
     <string name="seek_to_hint">Seconds</string>
     <string name="press_mic_to_start">Press mic to start recognizing</string>
+    <string name="auto_populate">Auto populate</string>
 
 </resources>

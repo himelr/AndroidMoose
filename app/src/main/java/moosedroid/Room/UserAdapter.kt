@@ -15,18 +15,19 @@ import android.widget.TextView
 
         viewHolder.bind(users[position])
         viewHolder.itemView.setOnClickListener({
-            println("CLicked")
+
         })
     }
 
     override fun getItemCount(): Int = users.size
 
-    inner class UserViewHolder(parent: android.view.ViewGroup) : android.support.v7.widget.RecyclerView.ViewHolder(android.view.LayoutInflater.from(parent.context).inflate(com.acrcloud.rec.mooseb.R.layout.list_item, parent, false)) {
+    inner class UserViewHolder(parent: android.view.ViewGroup) : android.support.v7.widget.RecyclerView.ViewHolder(android.view.LayoutInflater.from(parent.context).inflate(com.acrcloud.rec.mooseb.R.layout.list_item_listened, parent, false)) {
 
         fun bind(user: User) = with(itemView) {
             //val taskCb = findViewById(R.id.recycleUser) as android.widget.CheckBox
-            val userView = findViewById<TextView>(com.acrcloud.rec.mooseb.R.id.item2)
-            userView.text = user.email + user.id
+            val userView = findViewById<TextView>(com.acrcloud.rec.mooseb.R.id.title_name)
+            userView.text = user.id.toString() + " " + user.email
+
         }
     }
 }

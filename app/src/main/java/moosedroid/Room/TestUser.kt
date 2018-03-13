@@ -16,22 +16,9 @@ import moosedroid.Views.MenuBaseActivity
 import javax.inject.Inject
 
 class TestUser : MenuBaseActivity(), UserPresentation {
-    override fun setBottomBar() {
-        bottomBar = findViewById(R.id.navigation)
-        setItems()
-    }
-
-
-    override fun getLayoutResourceId(): Int {
-    return activity_test_user
-    }
-
 
     @Inject
     lateinit var presenter: UserPresenter
-    @Inject
-    lateinit var presenter2: ListenedPresenter
-
 
     var recyclerView:RecyclerView? = null
 
@@ -55,22 +42,12 @@ class TestUser : MenuBaseActivity(), UserPresentation {
         presenter.onDestroy()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
-
         AndroidInjection.inject(this)
+        upVar = true
         super.onCreate(savedInstanceState)
-        setContentView(activity_test_user)
-        this.setSupportActionBar(findViewById(R.id.my_toolbar))
-
         recyclerView = findViewById(R.id.userList)
         recyclerView?.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         recyclerView?.adapter = UserAdapter(emptyList())
-
-
-
-
-        //setSupportActionBar(my_toolbar)
-        //val ab = supportActionBar
-        //ab!!.setDisplayHomeAsUpEnabled(true)
         presenter.onCreate(this)
 
     /*    presenter.addNewUser("poggers")
@@ -78,6 +55,14 @@ class TestUser : MenuBaseActivity(), UserPresentation {
         presenter2.addNewSong(song)*/
 
         }
+    override fun setBottomBar() {
+        bottomBar = findViewById(R.id.include2)
+        setItems()
+    }
+
+    override fun getLayoutResourceId(): Int {
+        return activity_test_user
+    }
     override fun showListened(listenedList: List<Listened>) {}
 
     override fun listenedAddedAt(position: Int) {}
