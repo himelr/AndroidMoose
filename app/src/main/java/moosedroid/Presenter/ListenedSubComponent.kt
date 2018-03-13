@@ -1,9 +1,8 @@
-package moosedroid.Presentation
+package moosedroid.Presenter
 
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
 import moosedroid.Views.*
-import moosedroid.Views.Fragments.ListenedFragment
 
 /**
  * Created by HimelR on 24-Feb-18.

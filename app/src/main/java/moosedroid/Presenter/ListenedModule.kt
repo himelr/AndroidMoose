@@ -1,15 +1,12 @@
-package moosedroid.Presentation
+package moosedroid.Presenter
 
 import android.app.Activity
-import android.app.Fragment
 import dagger.Binds
 import dagger.Module
 import dagger.android.ActivityKey
 import dagger.android.AndroidInjector
-import dagger.android.FragmentKey
 import dagger.multibindings.IntoMap
 import moosedroid.Views.*
-import moosedroid.Views.Fragments.ListenedFragment
 
 /**
  * Created by HimelR on 24-Feb-18.

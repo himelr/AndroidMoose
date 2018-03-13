@@ -45,7 +45,7 @@
         <activity android:name="moosedroid.Firebase.SignupFireActivity" />
         <activity android:name="moosedroid.Firebase.ResetPasswordFireActivity" />
         <activity
-            android:name="moosedroid.Presentation.TestUser"
+            android:name="moosedroid.Presenter.TestUser"
             android:launchMode="singleTask" />
         <activity android:name="moosedroid.Views.UserListenedActivity"
             android:launchMode="singleTask"/>

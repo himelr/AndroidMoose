@@ -5,10 +5,9 @@ import android.app.Application
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
-import moosedroid.Presentation.AppComponent
-import moosedroid.Presentation.AppModule
-import moosedroid.Presentation.DaggerAppComponent
-import moosedroid.Room.AppDatabase
+import moosedroid.Presenter.AppComponent
+import moosedroid.Presenter.AppModule
+import moosedroid.Presenter.DaggerAppComponent
 import javax.inject.Inject
 
 /**

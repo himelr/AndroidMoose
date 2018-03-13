@@ -13,10 +13,10 @@ import com.acrcloud.rec.mooseb.R
 import com.google.firebase.auth.FirebaseAuth
 import dagger.android.AndroidInjection
 import moosedroid.Firebase.LoginFireActivity
-import moosedroid.Presentation.ListenedPresentation
-import moosedroid.Presentation.ListenedPresenter
-import moosedroid.Presentation.TestUser
-import moosedroid.Presentation.UserPresenter
+import moosedroid.Presenter.ListenedPresentation
+import moosedroid.Presenter.ListenedPresenter
+import moosedroid.Presenter.TestUser
+import moosedroid.Presenter.UserPresenter
 import moosedroid.Models.Listened
 import moosedroid.Models.User
 import javax.inject.Inject

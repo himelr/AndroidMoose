@@ -1,4 +1,4 @@
-package moosedroid.Presentation
+package moosedroid.Presenter
 
 import dagger.Component
 import moosedroid.UserApplication

@@ -1,4 +1,4 @@
-package moosedroid.Presentation
+package moosedroid.Presenter
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

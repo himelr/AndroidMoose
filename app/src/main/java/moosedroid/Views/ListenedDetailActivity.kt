@@ -16,8 +16,8 @@ import com.google.android.youtube.player.YouTubePlayerView
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_listened_detail.*
 import moosedroid.Firebase.Config
-import moosedroid.Presentation.ListenedPresentation
-import moosedroid.Presentation.ListenedPresenter
+import moosedroid.Presenter.ListenedPresentation
+import moosedroid.Presenter.ListenedPresenter
 import moosedroid.Models.Listened
 import javax.inject.Inject
 

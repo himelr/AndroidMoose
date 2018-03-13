@@ -15,7 +15,7 @@ import com.acrcloud.rec.mooseb.R
 import com.google.firebase.auth.FirebaseAuth
 import com.acrcloud.rec.mooseb.R.layout.*
 import dagger.android.AndroidInjection
-import moosedroid.Presentation.UserPresenter
+import moosedroid.Presenter.UserPresenter
 import moosedroid.Views.Main2Activity
 import javax.inject.Inject
 

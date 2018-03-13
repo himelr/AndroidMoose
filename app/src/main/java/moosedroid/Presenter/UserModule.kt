@@ -1,4 +1,4 @@
-package moosedroid.Presentation
+package moosedroid.Presenter
 
 import android.app.Activity
 import dagger.Binds

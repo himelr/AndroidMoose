@@ -7,11 +7,9 @@ import android.view.Menu
 import com.acrcloud.rec.mooseb.R
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_user_listened.*
-import moosedroid.Presentation.ListenedAdapter
-import moosedroid.Presentation.ListenedPresentation
-import moosedroid.Presentation.ListenedPresenter
+import moosedroid.Presenter.ListenedAdapter
+import moosedroid.Presenter.ListenedPresentation
 import moosedroid.Models.Listened
-import javax.inject.Inject
 
 class UserListenedActivity : MenuBaseActivity(), ListenedPresentation {
 

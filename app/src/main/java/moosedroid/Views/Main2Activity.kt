@@ -31,10 +31,9 @@ import com.google.android.gms.location.LocationServices
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import moosedroid.Presentation.ListenedPresenter
+import moosedroid.Presenter.ListenedPresenter
 import moosedroid.Models.Listened
 import org.json.JSONArray
 import javax.inject.Inject
@@ -256,7 +255,7 @@ class Main2Activity : MenuBaseActivity(), IACRCloudListener, ListenedPresenter.S
                 val youtubeId: JSONObject? = youtube?.getJSONObject("youtube")
                 val youtString: String? = youtubeId?.getString("vid")
                 video = youtString ?: ""
-
+                Log.d("test2",video)
             } catch (e: JSONException) {
             }
 
